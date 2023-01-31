@@ -11,14 +11,12 @@ import NotFound from "./pages/NotFound";
 function App() {
   return (
     <Routes>
-      <Route element={<DefaultLayout />}>
-        <Route path={"/"} element={<Home />} />
-        <Route path={"/article"} element={<ArticleEdit />} />
-        <Route path={"/curation"} element={<CurationEdit />} />
-        <Route path={"/schedule"} element={<ScheduleEdit />} />
-        <Route path={"/editor"} element={<EditorEdit />} />
-        <Route path={"*"} element={<NotFound />} />
-      </Route>
+      <Route path={"/"} element={<Home />} />
+      <Route path={"/article"} element={<ArticleEdit />} />
+      <Route path={"/curation"} element={<CurationEdit />} />
+      <Route path={"/schedule"} element={<ScheduleEdit />} />
+      <Route path={"/editor"} element={<EditorEdit />} />
+      <Route path={"*"} element={<NotFound />} />
     </Routes>
   );
 }
