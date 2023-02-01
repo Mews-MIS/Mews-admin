@@ -7,6 +7,7 @@ import EditorEdit from "./pages/EditorEdit";
 import ScheduleEdit from "./pages/ScheduleEdit";
 import NotFound from "./pages/NotFound";
 import DefaultLayout from "./layouts/DefaultLayout";
+import Statics from "./pages/Statics";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path={"/curation"} element={<CurationEdit />} />
         <Route path={"/schedule"} element={<ScheduleEdit />} />
         <Route path={"/editor"} element={<EditorEdit />} />
+        <Route path={"/statics"} element={<Statics />} />
         <Route path={"*"} element={<NotFound />} />
       </Route>
     </Routes>
