@@ -6,7 +6,9 @@ interface Props {}
 const DefaultLayout = ({}: Props) => {
   return (
     <div className={"flex"}>
-      <aside className={" w-64 h-screen bg-[#FF9136] text-white p-10 text-xl"}>
+      <aside
+        className={" w-64 h-screen bg-[#FF9136] text-white p-10 text-xl flex-0"}
+      >
         <img src={WhiteLogo} alt={"로고"} />
         <div className={"mt-10"}>
           <section>
@@ -29,7 +31,7 @@ const DefaultLayout = ({}: Props) => {
           </section>
         </div>
       </aside>
-      <main>
+      <main className={"flex-auto"}>
         <Outlet />
       </main>
     </div>
