@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 const AddCuration = ({ curationList, setCurationList }) => {
   const [text, setText] = useState("");
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   const onChangeInput = (e: any) => {
     setText(e.target.value);
@@ -12,6 +12,7 @@ const AddCuration = ({ curationList, setCurationList }) => {
   const onClickAddButton = () => {
     const nextCurationList = curationList.concat({
       id: curationList.length,
+      checked: false,
       text,
     });
     setCurationList(nextCurationList);

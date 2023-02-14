@@ -2,24 +2,31 @@ import React from "react";
 import PropTypes from "prop-types";
 import CurationItem from "./CurationItem";
 
-const CurationList = ({ title, curationList, setCurationList }) => {
-  return (
-    <div>
-      <p className="md: font-bold">{title}</p>
-      <ul>
-        {curationList &&
-          curationList.map((curationItem: any) => (
+const CurationList = ({
+  title,
+  curationList,
+  setCurationList,
+  checkedList,
+}) => (
+  <div>
+    <p className="md: font-bold">{title}</p>
+    <ul>
+      {curationList &&
+        curationList.map((curationItem: any) => {
+          if (checkedList !== curationItem.checked) return null;
+
+          return (
             <CurationItem
               key={curationItem.id}
               curationItem={curationItem}
               curationList={curationList}
               setCurationList={setCurationList}
             />
-          ))}
-      </ul>
-    </div>
-  );
-};
+          );
+        })}
+    </ul>
+  </div>
+);
 
 CurationList.propTypes = {
   title: PropTypes.string.isRequired,
@@ -30,6 +37,7 @@ CurationList.propTypes = {
     })
   ),
   setCurationList: PropTypes.func.isRequired,
+  checkedList: PropTypes.bool.isRequired,
 };
 
 export default CurationList;
