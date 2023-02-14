@@ -1,10 +1,21 @@
-import SideBar from "../components/SideBar";
+import React, { useState } from "react";
+import AddCuration from "../components/Curation/AddCuration";
+import CurationList from "../components/Curation/CurationList";
 
 const CurationEdit = () => {
+  const [curationList, setCurationList] = useState([]);
   return (
-    <>
-      <h1>큐레이션 관리 페이지</h1>
-    </>
+    <div>
+      <AddCuration
+        curationList={curationList}
+        setCurationList={setCurationList}
+      />
+      <CurationList
+        title={"선택된일"}
+        curationList={curationList}
+        setCurationList={setCurationList}
+      />
+    </div>
   );
 };
 
