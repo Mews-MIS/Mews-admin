@@ -1,19 +1,50 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 import CurationEditIcon from "../../assets/Icon/CurationEditIcon.svg";
 import CurationDeleteIcon from "../../assets/Icon/CurationDeleteIcon.svg";
+import EditComplete from "../../assets/Icon/EditComplete.svg";
 import PropTypes from "prop-types";
 
 const CurationItem = ({ curationItem, curationList, setCurationList }) => {
   const onChangeCheckbox = () => {
-    const nextTodoList = curationList.map(
+    const nextCurationList = curationList.map(
       (item: { id: number; checked: boolean }) => ({
         ...item,
         checked: item.id === curationItem.id ? !item.checked : item.checked,
       })
     );
 
-    setCurationList(nextTodoList);
+    setCurationList(nextCurationList);
   };
+
+  const [edited, setEdited] = useState(false);
+  const [newText, setNewText] = useState(curationItem.text);
+
+  const editInputRef = useRef(null);
+
+  useEffect(() => {
+    if (edited) {
+      editInputRef.current.focus();
+    }
+  }, [edited]);
+
+  const onClickEditButton = () => {
+    setEdited(true);
+  };
+
+  const onChangeEditInput = (e) => {
+    setNewText(e.target.value);
+  };
+
+  const onClickSubmitButton = () => {
+    const nextCurationList = curationList.map((item) => ({
+      ...item,
+      text: item.id === curationItem.id ? newText : item.text, // 새로운 아이템 내용을 넣어줌
+    }));
+    setCurationList(nextCurationList); // 새로운 리스트를 넣어줌
+
+    setEdited(false); // 수정모드를 다시 읽기모드로 변경
+  };
+
   return (
     <div>
       <li>
@@ -24,12 +55,41 @@ const CurationItem = ({ curationItem, curationList, setCurationList }) => {
           onChange={onChangeCheckbox}
         />
         {/* 아이템 내용 */}
-        <span className="todoapp__item-ctx">{curationItem.text}</span>
+        {edited ? (
+          <input
+            type="text"
+            value={newText}
+            ref={editInputRef}
+            onChange={onChangeEditInput}
+          />
+        ) : (
+          <span
+            className={`todoapp__item-ctx ${
+              curationItem.checked ? "todoapp__item-ctx-checked" : ""
+            }`}
+          >
+            {curationItem.text}
+          </span>
+        )}
         {/* 수정 버튼 */}
         {!curationItem.checked ? (
-          <button type="button" className="todoapp__item-edit-btn">
-            <img src={CurationEditIcon} alt={"큐레이션수정"} />
-          </button>
+          edited ? (
+            <button
+              type="button"
+              className="todoapp__item-edit-btn"
+              onClick={onClickSubmitButton}
+            >
+              <img src={EditComplete} alt={"큐레이션수정"} />
+            </button>
+          ) : (
+            <button
+              type="button"
+              className="todoapp__item-edit-btn"
+              onClick={onClickEditButton}
+            >
+              <img src={CurationEditIcon} alt={"큐레이션수정"} />
+            </button>
+          )
         ) : null}
         {/* 삭제 버튼 */}
         <button type="button" className="todoapp__item-delete-btn">
