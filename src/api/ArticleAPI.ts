@@ -21,9 +21,26 @@ const ArticleAPI = {
       const path = "article/post";
       const response = await HttpClient.post(path, articleFormData, {
         "content-type": "multipart/form-data",
+        withCredentials: true,
       });
 
       console.log(response.response);
+
+      return response.response;
+    } catch (e) {
+      console.log(e);
+    }
+  },
+
+  getPageArticles: async ({ page }: { page: number }) => {
+    try {
+      const path = "article/all";
+      const response = await HttpClient.get(
+        path,
+        { page },
+        { withCredentials: true }
+      );
+      console.log(response);
 
       return response.response;
     } catch (e) {
