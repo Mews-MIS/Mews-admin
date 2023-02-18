@@ -1,4 +1,5 @@
 import { Editor } from "@toast-ui/react-editor";
+import ArticleAPI from "../../api/ArticleAPI";
 
 interface Props {
   content?: string;
@@ -26,6 +27,14 @@ const ContentEditor = ({ content = "", editorRef }: Props) => {
       hideModeSwitch={true}
       toolbarItems={toolbarItems}
       language={"ko-KR"}
+      hooks={{
+        addImageBlobHook: async (blob, callback) => {
+          console.log(blob);
+
+          const imgUrls = await ArticleAPI.postImageFile(blob);
+          console.log(imgUrls);
+        },
+      }}
     />
   );
 };
