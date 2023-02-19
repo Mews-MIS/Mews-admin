@@ -15,12 +15,18 @@
     "@toast-ui/react-editor": "^3.2.2",
     "array-move": "^4.0.0",
     "autoprefixer": "^10.4.13",
+    "axios": "^1.3.3",
     "daisyui": "^2.49.0",
     "postcss": "^8.4.21",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+<<<<<<< HEAD
     "react-router-dom": "^6.8.0",
     "react-sortable-hoc": "^2.0.0"
+=======
+    "react-hook-form": "^7.43.1",
+    "react-router-dom": "^6.8.0"
+>>>>>>> a03bb8726dedd8b382b4edeb1fec35a275ee4b04
   },
   "devDependencies": {
     "@types/react": "^18.0.26",

@@ -15,7 +15,7 @@ const DefaultLayout = ({}: Props) => {
             <Link to={"/"}>홈</Link>
           </section>
           <section>
-            <Link to={"/article"}>게시글 관리</Link>
+            <Link to={"/article/new"}>게시글 관리</Link>
           </section>
           <section>
             <Link to={"/curation"}>큐레이션 관리</Link>
