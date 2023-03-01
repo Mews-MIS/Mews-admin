@@ -27,9 +27,9 @@ const ArticleWrite = () => {
                   throw new Error("내용을 입력해주세요.");
                 }
 
-                // 서버로 데이터 전송
                 await ArticleAPI.postArticle({
                   title: data.title,
+                  category: data.category,
                   content: contentMark,
                   fileUrls: [],
                 });
