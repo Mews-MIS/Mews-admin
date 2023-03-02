@@ -4,10 +4,14 @@ const ArticleAPI = {
   postImageFile: async (uploadImages: any) => {
     try {
       const path = "file/upload";
-      const response = await HttpClient.post(path, uploadImages);
-      const { fileUrls } = response.response as {
+      const response = await HttpClient.post(path, uploadImages, {
+        "content-type": "multipart/form-data",
+      });
+      const { fileUrls } = response as {
         fileUrls: string[];
       };
+
+      console.log(fileUrls);
 
       return fileUrls;
     } catch (e) {
@@ -24,9 +28,9 @@ const ArticleAPI = {
         withCredentials: true,
       });
 
-      console.log(response.response);
+      console.log(response);
 
-      return response.response;
+      return response;
     } catch (e) {
       console.log(e);
     }
@@ -35,14 +39,9 @@ const ArticleAPI = {
   getPageArticles: async ({ page }: { page: number }) => {
     try {
       const path = "article/all";
-      const response = await HttpClient.get(
-        path,
-        { page },
-        { withCredentials: true }
-      );
-      console.log(response);
+      const response = await HttpClient.get(path, { page });
 
-      return response.response;
+      return response;
     } catch (e) {
       console.log(e);
     }

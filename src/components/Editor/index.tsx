@@ -29,10 +29,15 @@ const ContentEditor = ({ content = "", editorRef }: Props) => {
       language={"ko-KR"}
       hooks={{
         addImageBlobHook: async (blob, callback) => {
-          console.log(blob);
-
-          const imgUrls = await ArticleAPI.postImageFile(blob);
-          console.log(imgUrls);
+          const formData = new FormData();
+          formData.append("file", blob);
+          try {
+            const response = await ArticleAPI.postImageFile(formData);
+            // @ts-ignore
+            callback(response!.data);
+          } catch (error) {
+            console.error(error);
+          }
         },
       }}
     />
