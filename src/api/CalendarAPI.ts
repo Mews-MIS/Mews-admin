@@ -3,10 +3,10 @@ import HttpClient from "../services/HttpClient";
 const CalendarAPI = {
   postSchedule: async (uploadSchedule: any) => {
     try {
-      const path = "calendar/getall";
-      const { data } = await HttpClient.post(path, uploadSchedule);
-      console.log(data);
-      return data;
+      const path = "calendar/write";
+      const response = await HttpClient.post(path, uploadSchedule);
+      console.log(response);
+      return response;
 
     } catch (e) {
       console.log(e);
@@ -14,10 +14,10 @@ const CalendarAPI = {
   },
   getSchedule: async () => {
     try {
-      const path = "calendar/write";
-      const { data } = await HttpClient.get(path);
-      console.log(data);
-      return data;
+      const path = "calendar/getall";
+      const response = await HttpClient.get(path, {}, {});
+      console.log(response)
+      return response;
 
     } catch (e) {
       console.log(e);

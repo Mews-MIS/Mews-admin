@@ -5,12 +5,13 @@ import DeleteScheduleItem from "../../assets/Icon/DeleteScheduleItem.svg";
 
 const ScheduleItem = ({title, startDate, endDate}: IScheduleProps) => {
   const startYear = startDate[0];
-  const startMonth = startDate[1];
-  const startDay = startDate[2];
+  let startMonth = ("00"+startDate[1]).slice(-2);
+  let startDay = ("00"+startDate[2]).slice(-2);
+  
 
   const endYear = endDate[0];
-  const endMonth = endDate[1];
-  const endDay = endDate[2];
+  let endMonth = ("00"+endDate[1]).slice(-2);
+  let endDay = ("00"+endDate[2]).slice(-2);
   
   return (
     <s.Wrapper>
