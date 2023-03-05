@@ -2,6 +2,7 @@ import ScheduleItem from "../components/ScheduleItem";
 import styled from "@emotion/styled";
 import axios, { AxiosStatic } from "axios";
 import { useEffect, useState } from "react";
+import CalendarAPI from "../api/CalendarAPI";
 
 export interface IScheduleProps {
   title: string,
@@ -19,33 +20,50 @@ interface IDataType {
 
 const ScheduleEdit = () => {
   const [data, setData] = useState([]);
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [schedules, setSchedules] = useState([]);
+  
+  const [category, setCategory] = useState("");
+
+  const handleCategory = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setCategory(e.target.value);
+  }
+
+  const handleStartDate = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.value);
+    setStartDate(e.target.value);
+  }
+
+  const handleEndDate = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.value);
+    setEndDate(e.target.value);
+  }
+
   /* api 받아 옴 */
-
-  async function getData() {
-    return await axios.get(
-      'http://13.209.163.188:8080/calendar/getall',
-      {
-        headers: {
-          Authorization: `
-            Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0dGVzdDMxOUBuYXZlci5jb20iLCJhdXRoIjoiUk9MRV9VU0VSIiwiaWF0IjoxNjc2OTY2NDYzLCJleHAiOjE2NzY5NzAwNjN9.4tcQkHsPiIlQcOzqtBVmSKAQceqELNxf-jlOznf0qehD7VgGOreh7M3p1ILmkB0OZS7z3C7oJA4AIvnnoi0lKw
-          `
-        }
-      }
-    )
-      .then((res) => {
-        console.log(res.data);
-        setData(res.data);
-        return res.data;
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-    ;
-  };
-
   useEffect(() => {
-    getData();
-  }, [])
+    const schedules: Promise<any> = CalendarAPI.getSchedule();
+    schedules.then((data) => {
+      setSchedules(data);
+    })
+  }, []);
+
+  // async function getData() {
+  //   return await axios.get('http://13.209.163.188:8080/calendar/getall')
+  //     .then((res) => {
+  //       console.log(res.data);
+  //       setData(res.data);
+  //       return res.data;
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     })
+  //   ;
+  // };
+
+  // useEffect(() => {
+  //   getData();
+  // }, [])
 
   return (
     <Wrapper>
@@ -53,7 +71,8 @@ const ScheduleEdit = () => {
         <Title>현재 적용된 스케줄</Title>
         <ScheduleListContainer>
           {
-            data.map((item: IDataType) => {
+            schedules &&
+            schedules.map((item: IDataType) => {
               return <ScheduleItem title={item.title} startDate={item.startDate} endDate={item.endDate} />
             })
           }
@@ -62,10 +81,16 @@ const ScheduleEdit = () => {
 
       <Container>
         <Title>스케줄 추가</Title>
+
           <ScheduleInput>
+            <ScheduleSelect placeholder="일정 종류" onChange={handleCategory}>
+              <option key="동국대학교" value="동국대학교">동국대학교</option>
+              <option key="경영정보학과" value="경영정보학과">경영정보학과</option>
+              <option key="Mews" value="Mews">Mews</option>
+            </ScheduleSelect>
             <ScheduleTitleInput type="text"/>
-            <ScheduleDateInput type="date" placeholder="시작 날짜"/>
-            <ScheduleDateInput type="date" placeholder="종료 날짜"/>
+            <ScheduleDateInput type="date" placeholder="시작 날짜" onChange={handleStartDate}/>
+            <ScheduleDateInput type="date" placeholder="종료 날짜" onChange={handleEndDate}/>
           </ScheduleInput>
       </Container>
 
@@ -112,5 +137,9 @@ const ScheduleTitleInput = styled.input`
 const ScheduleDateInput = styled.input`
   width: 20%;
 `;
+
+const ScheduleSelect = styled.select`
+  
+`
 
 export default ScheduleEdit;
