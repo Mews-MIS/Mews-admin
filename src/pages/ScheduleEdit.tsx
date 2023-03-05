@@ -3,13 +3,7 @@ import styled from "@emotion/styled";
 import { useEffect, useState } from "react";
 import CalendarAPI from "../api/CalendarAPI";
 
-export interface IScheduleProps {
-  title: string,
-  startDate: string[],
-  endDate: string[]
-}
-
-interface IDataType {
+export interface IDataType {
   id?: number,
   title: string,
   category?: string,
@@ -106,8 +100,8 @@ const ScheduleEdit = () => {
         <ScheduleListContainer>
           {
             schedules &&
-            schedules.map((item: IScheduleProps) => {
-              return <ScheduleItem title={item.title} startDate={item.startDate} endDate={item.endDate} />
+            schedules.map((item: IDataType) => {
+              return <ScheduleItem id={item.id} category={item.category} title={item.title} startDate={item.startDate} endDate={item.endDate} />
             })
           }
         </ScheduleListContainer>
