@@ -7,11 +7,7 @@ const ArticleAPI = {
       const response = await HttpClient.post(path, uploadImages, {
         "content-type": "multipart/form-data",
       });
-      const { fileUrls } = response as {
-        fileUrls: string[];
-      };
-
-      console.log(fileUrls);
+      const { fileUrls } = response.data;
 
       return fileUrls;
     } catch (e) {
@@ -21,11 +17,9 @@ const ArticleAPI = {
 
   postArticle: async (articleFormData: any) => {
     try {
-      console.log(articleFormData);
       const path = "article/post";
       const response = await HttpClient.post(path, articleFormData, {
         "content-type": "multipart/form-data",
-        withCredentials: true,
       });
 
       console.log(response);
@@ -40,6 +34,17 @@ const ArticleAPI = {
     try {
       const path = "article/all";
       const response = await HttpClient.get(path, { page });
+
+      return response;
+    } catch (e) {
+      console.log(e);
+    }
+  },
+
+  getArticleInfo: async (articleId: any) => {
+    try {
+      const path = `article/${articleId}`;
+      const response = await HttpClient.get(path);
 
       return response;
     } catch (e) {

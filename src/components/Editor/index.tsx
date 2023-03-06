@@ -34,7 +34,7 @@ const ContentEditor = ({ content = "", editorRef }: Props) => {
           try {
             const response = await ArticleAPI.postImageFile(formData);
             // @ts-ignore
-            callback(response!.data);
+            callback(response);
           } catch (error) {
             console.error(error);
           }
