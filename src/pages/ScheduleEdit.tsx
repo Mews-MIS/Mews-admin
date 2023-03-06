@@ -7,14 +7,14 @@ export interface IDataType {
   id?: number,
   title: string,
   category?: string,
-  startDate: string[],
-  endDate: string[]
+  startDate: string,
+  endDate: string
 }
 
 const ScheduleEdit = () => {
   const [title, setTitle] = useState("");
-  const [startDate, setStartDate] = useState([""]);
-  const [endDate, setEndDate] = useState([""]);
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   const [category, setCategory] = useState("");
   const [schedules, setSchedules] = useState<IDataType[]>([]);
   const [existSchedules, setExistSchedules] = useState([]); // 기존 DB에 존재하는 일정 리스트 상태
@@ -31,13 +31,13 @@ const ScheduleEdit = () => {
 
   const handleStartDate = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log(e.target.value);
-    setStartDate(e.target.value.split('-'));
+    setStartDate(e.target.value);    
     console.log({startDate});
   }
 
   const handleEndDate = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log(e.target.value);
-    setEndDate(e.target.value.split('-'));
+    setEndDate(e.target.value);
     console.log({endDate});
   }
 
@@ -49,9 +49,8 @@ const ScheduleEdit = () => {
       endDate: endDate,
       category: category
     };
-    setSchedules([...schedules, newSchedule]);
-    console.log(schedules);
-    CalendarAPI.postSchedule(schedules);
+    console.log({newSchedule});
+    CalendarAPI.postSchedule(newSchedule);
   };
 
   const resetSchedule = (e: React.MouseEvent<HTMLButtonElement>) => {
