@@ -8,7 +8,8 @@ import ScheduleEdit from "./pages/ScheduleEdit";
 import NotFound from "./pages/NotFound";
 import DefaultLayout from "./layouts/DefaultLayout";
 import Statics from "./pages/Statics";
-import ArticleEdit from "./pages/Article/ArticleEdit";
+import ArticleEditList from "./pages/Article/ArticleEditList";
+import ArticleEditDetail from "./pages/Article/ArticleEditDetail";
 
 function App() {
   return (
@@ -16,7 +17,8 @@ function App() {
       <Route element={<DefaultLayout />}>
         <Route path={"/"} element={<Home />} />
         <Route path={"/article/new"} element={<ArticleWrite />} />
-        <Route path={"/article/edit"} element={<ArticleEdit />} />
+        <Route path={"/article/edit"} element={<ArticleEditList />} />
+        <Route path={"/article/edit/:id"} element={<ArticleEditDetail />} />
         <Route path={"/curation"} element={<CurationEdit />} />
         <Route path={"/schedule"} element={<ScheduleEdit />} />
         <Route path={"/editor"} element={<EditorEdit />} />

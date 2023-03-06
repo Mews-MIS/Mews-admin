@@ -27,12 +27,26 @@ const ArticleWrite = () => {
                   throw new Error("내용을 입력해주세요.");
                 }
 
-                await ArticleAPI.postArticle({
-                  title: data.title,
-                  category: data.category,
+                const formData = new FormData();
+                const form = {
+                  title: data.title as string,
                   content: contentMark,
-                  fileUrls: [],
-                });
+                  type: "article",
+                  fileUrls: [
+                    "https://mewsbucket.s3.ap-northeast-2.amazonaws.com/c8ef5c78-dbe4-4cd4-976d-72a48ad8d914.png",
+                    "https://mewsbucket.s3.ap-northeast-2.amazonaws.com/bee2593f-2e85-4c0c-b076-b8217c5a8280.png",
+                  ],
+                  editors: [1, 2],
+                };
+
+                console.log(form);
+
+                formData.append(
+                  "data",
+                  new Blob([JSON.stringify(form)], { type: "application/json" })
+                );
+                // const response = await ArticleAPI.postArticle(formData);
+                console.log(response);
               } catch (e) {
                 console.log(e);
               }
@@ -52,6 +66,24 @@ const ArticleWrite = () => {
                   id="title"
                   name="title"
                   placeholder="제목을 입력해주세요"
+                  className="w-full rounded border border-gray-300 bg-gray-100 bg-opacity-50 py-1 px-3 text-base leading-8 text-gray-700 outline-none transition-colors duration-200 ease-in-out placeholder:text-sm focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200"
+                />
+              </div>
+              <div className={"mt-5"}>
+                <label
+                  htmlFor="type"
+                  className="text-sm leading-7 text-gray-600"
+                >
+                  카테고리
+                </label>
+                <input
+                  {...register("type", {
+                    required: "카테고리를 입력해주세요.",
+                  })}
+                  type="text"
+                  id="type"
+                  name="type"
+                  placeholder="d"
                   className="w-full rounded border border-gray-300 bg-gray-100 bg-opacity-50 py-1 px-3 text-base leading-8 text-gray-700 outline-none transition-colors duration-200 ease-in-out placeholder:text-sm focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200"
                 />
               </div>
