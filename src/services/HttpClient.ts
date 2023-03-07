@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_SERVER_BASE_URL,
+  // baseURL: import.meta.env.local.VITE_SERVER_BASE_URL,
+  baseURL: "http://13.209.163.188:8080/",
 });
 
 const HttpClient = {
