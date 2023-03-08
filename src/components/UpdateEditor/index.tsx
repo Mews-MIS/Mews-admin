@@ -3,10 +3,11 @@ import EditorAPI from "../../api/EditorAPI";
 
 interface Editor {
   name: string;
-  introduction?: string;
-  id: number;
-  file: string;
+  introduction: string;
+  id?: number;
+  file?: string;
 }
+
 const UpdateEditor = () => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const editorNameInputRef = useRef<HTMLInputElement | null>(null);
@@ -16,9 +17,10 @@ const UpdateEditor = () => {
     string | ArrayBuffer | undefined | null
   >();
   const [imageFile, setImageFile] = useState<File | null>(null);
+
   const [editors, setEditors] = useState<Editor[] | null>([]);
   const [isDeleted, setIsDeleted] = useState<Boolean>(false);
-  const [editor, setEditor] = useState<Editor | null>();
+  const [editor, setEditor] = useState<Editor | null>(null);
 
   useEffect(() => {
     EditorAPI.getEditorAll().then((data) => {
@@ -62,12 +64,63 @@ const UpdateEditor = () => {
     }
   };
 
-  //update api
-  const updateEditor = () => {};
+  const dataValidCheck = (data: Editor) => {
+    if (data.name === "") {
+      alert("이름을 입력해주세요.");
+      return false;
+    }
+    if (data.introduction === "") {
+      alert("소개를 입력해주세요.");
+      return false;
+    }
+    //이미지 필수값 아니면 필요없음
+    // if (data.imgUrl === "") {
+    //   alert("이미지를 선택해주세요");
+    //   return false;
+    // }
+    return true;
+  };
 
+  //update api
+  const updateEditor = async () => {
+    if (
+      fileInputRef.current == null ||
+      editorIntroTextareaRef.current == null ||
+      editorNameInputRef.current == null
+    )
+      return;
+    const newEditor: Editor = {
+      id: editor?.id,
+      name: editorNameInputRef.current.value,
+      introduction: editorIntroTextareaRef.current.value,
+    };
+
+    if (!dataValidCheck(newEditor)) return;
+
+    if (confirm("해당 필진을 수정하시겠습니까?")) {
+      if (!imageFile) return;
+      const newEditorString = JSON.stringify(newEditor);
+
+      const formData = new FormData();
+      formData.append("file", imageFile);
+      formData.append(
+        "data",
+        new Blob([newEditorString], { type: "application/json" })
+      );
+      console.log(formData);
+      await EditorAPI.updateEditor(formData);
+    }
+  };
   const showEditor = async (id: number) => {
     await EditorAPI.getEditor(id).then((res) => {
-      console.log(res.imgUrl);
+      console.log(res);
+      const currentEditor: Editor = {
+        id: res.id,
+        name: res.name,
+        introduction: res.introduction,
+        file: res.imgUrl,
+      };
+      setEditor(currentEditor);
     });
   };
 
@@ -83,13 +136,16 @@ const UpdateEditor = () => {
                   {editors
                     ? editors.map((data, index) => (
                         <div
+                          key={index}
                           className="flex flex-row  border-solid border-[1px] w-full h-[40px] cursor-pointer"
-                          onClick={() => showEditor(data.id)}
+                          onClick={() => data.id != null && showEditor(data.id)}
                         >
                           <div className="flex flex-row my-auto">
                             <button
                               className="w-[20px] h-[20px] rounded-full text-center my-auto mx-3 text-sm bg-gray-500 text-white hover:bg-gray-600"
-                              onClick={() => deleteEditor(data.id)}
+                              onClick={() =>
+                                data.id != null && deleteEditor(data.id)
+                              }
                             >
                               X
                             </button>
@@ -120,12 +176,7 @@ const UpdateEditor = () => {
             <div className={"h-full px-16"}>
               <div className={"mt-[20px] h-[20%] text-center"}>
                 <div className="w-[90px] h-[90px] rounded-full overflow-hidden bg-gray-300 border-solid border-2 border-gray-400 mx-auto mb-[10px] ">
-                  <img
-                    src={imageURL?.toString()}
-                    onClick={() => {
-                      console.log(imageURL?.toString());
-                    }}
-                  />
+                  <img src={editor ? editor.file : imageURL?.toString()} />
                 </div>
                 <label
                   htmlFor="file"
@@ -151,6 +202,7 @@ const UpdateEditor = () => {
                 </label>
                 <br />
                 <input
+                  defaultValue={editor ? editor.name : ""}
                   type="text"
                   id="editorName"
                   name="editorName"
@@ -168,6 +220,7 @@ const UpdateEditor = () => {
                 </label>
                 <br />
                 <textarea
+                  defaultValue={editor ? editor.introduction : ""}
                   id="editorIntro"
                   name="editorIntro"
                   placeholder="소개를 입력하세요"
@@ -187,7 +240,7 @@ const UpdateEditor = () => {
                     className="w-1/3 flex-1 text-sm font-medium rounded-lg text-white hover:bg-[#FFBD29] bg-[#FF9136] md:text-base lg:text-base"
                     onClick={updateEditor}
                   >
-                    등록
+                    수정
                   </button>
                 </div>
               </div>

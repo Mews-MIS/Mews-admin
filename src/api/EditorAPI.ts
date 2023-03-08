@@ -40,7 +40,20 @@ const EditorAPI = {
   deleteEditor: async (editor_id: number) => {
     try {
       const path = `/editor/delete/${editor_id}`;
-      const response = await HttpClient.delete(path, {});
+      const response = await HttpClient.fetch(path, {});
+      console.log(response);
+
+      return response;
+    } catch (e) {
+      console.log(e);
+    }
+  },
+  updateEditor: async (newEditorFormData: FormData) => {
+    try {
+      const path = "/editor/update";
+      const response = await HttpClient.fetch(path, newEditorFormData, {
+        "content-type": "multipart/form-data",
+      });
       console.log(response);
 
       return response;

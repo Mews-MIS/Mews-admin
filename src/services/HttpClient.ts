@@ -17,7 +17,7 @@ const HttpClient = {
   },
 
   fetch: async (path: string, body: unknown, headers = {}) => {
-    const response = await axiosInstance.put(path, body, { headers });
+    const response = await axiosInstance.patch(path, body, { headers });
     return response.data;
   },
 

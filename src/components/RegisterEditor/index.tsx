@@ -85,8 +85,6 @@ const RegisterEditor = () => {
       );
 
       await EditorAPI.postRegisterEditor(formData);
-      await EditorAPI.getEditorAll();
-      resetData();
     }
   };
 
