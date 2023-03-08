@@ -46,7 +46,6 @@ const ArticleWrite = () => {
                   new Blob([JSON.stringify(form)], { type: "application/json" })
                 );
                 // const response = await ArticleAPI.postArticle(formData);
-                console.log(response);
               } catch (e) {
                 console.log(e);
               }

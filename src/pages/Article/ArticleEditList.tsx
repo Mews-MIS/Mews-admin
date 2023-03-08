@@ -11,9 +11,8 @@ const ArticleEditList = () => {
 
   useEffect(() => {
     const getArticles = async () => {
-      const nowArticles = await ArticleAPI.getPageArticles({ page });
-      await setArticles(nowArticles);
-      console.log(nowArticles);
+      const response = await ArticleAPI.getPageArticles({page});
+      await setArticles(response!.articles);
     };
     getArticles();
   }, [page]);
@@ -25,7 +24,7 @@ const ArticleEditList = () => {
           <p>게시글 목록</p>
         </div>
         {articles.map((article: Article) => {
-          return <ArticleRow id={article.id} title={article.title} />;
+          return <ArticleRow key={article.id} id={article.id} title={article.title} />;
         })}
       </div>
     </ArticlePageLayout>

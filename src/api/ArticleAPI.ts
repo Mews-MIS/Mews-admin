@@ -33,9 +33,9 @@ const ArticleAPI = {
   getPageArticles: async ({ page }: { page: number }) => {
     try {
       const path = "article/all";
-      const response = await HttpClient.get(path, { page });
+      const response: {pageCount: number, articles:any} = await HttpClient.get(path, { page });
 
-      return response;
+      return response
     } catch (e) {
       console.log(e);
     }
