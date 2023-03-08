@@ -10,9 +10,13 @@ import DefaultLayout from "./layouts/DefaultLayout";
 import Statics from "./pages/Statics";
 import ArticleEditList from "./pages/Article/ArticleEditList";
 import ArticleEditDetail from "./pages/Article/ArticleEditDetail";
+import {QueryClient, QueryClientProvider} from "react-query";
 
 function App() {
+
+  const queryClient = new QueryClient();
   return (
+      <QueryClientProvider client={queryClient}>
     <Routes>
       <Route element={<DefaultLayout />}>
         <Route path={"/"} element={<Home />} />
@@ -26,6 +30,7 @@ function App() {
         <Route path={"*"} element={<NotFound />} />
       </Route>
     </Routes>
+      </QueryClientProvider>
   );
 }
 
