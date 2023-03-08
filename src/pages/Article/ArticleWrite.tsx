@@ -82,7 +82,7 @@ const ArticleWrite = () => {
                   type="text"
                   id="type"
                   name="type"
-                  placeholder="d"
+                  placeholder="카테코리를 입력해주세요."
                   className="w-full rounded border border-gray-300 bg-gray-100 bg-opacity-50 py-1 px-3 text-base leading-8 text-gray-700 outline-none transition-colors duration-200 ease-in-out placeholder:text-sm focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200"
                 />
               </div>
