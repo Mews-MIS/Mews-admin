@@ -11,24 +11,23 @@ import DefaultLayout from "./layouts/DefaultLayout";
 import Statics from "./pages/Statics";
 import ArticleEditList from "./pages/Article/ArticleEditList";
 import ArticleEditDetail from "./pages/Article/ArticleEditDetail";
-import {QueryClient, QueryClientProvider} from "react-query";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 function App() {
-
   const queryClient = new QueryClient();
   return (
     <QueryClientProvider client={queryClient}>
       <Routes>
         <Route element={<DefaultLayout />}>
-          <Route path={"/"} element={<Home />} />
-          <Route path={"/article/new"} element={<ArticleWrite />} />
-          <Route path={"/article/edit"} element={<ArticleEditList />} />
-          <Route path={"/article/edit/:id"} element={<ArticleEditDetail />} />
-          <Route path={"/curation"} element={<CurationEdit />} />
-          <Route path={"/schedule"} element={<ScheduleEdit />} />
-          <Route path={"/editor"} element={<EditorEdit />} />
-          <Route path={"/statics"} element={<Statics />} />
-          <Route path={"*"} element={<NotFound />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/article/new" element={<ArticleWrite />} />
+          <Route path="/article/edit" element={<ArticleEditList />} />
+          <Route path="/article/edit/:id" element={<ArticleEditDetail />} />
+          <Route path="/curation" element={<CurationEdit />} />
+          <Route path="/schedule" element={<ScheduleEdit />} />
+          <Route path="/editor" element={<EditorEdit />} />
+          <Route path="/statics" element={<Statics />} />
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
     </QueryClientProvider>
