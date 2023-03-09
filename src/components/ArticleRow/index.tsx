@@ -12,11 +12,8 @@ const ArticleRow = ({ id, title }: ArticleRowProps) => {
     navigate(`${id}`);
   };
   return (
-    <div
-      className={"flex h-10 items-center border-b-2"}
-      onClick={() => handleClickEvent(id)}
-    >
-      <div className={"mr-[20px]"}>{id}</div>
+    <div className="flex h-10 items-center border-b-2" onClick={() => handleClickEvent(id)}>
+      <div className="mr-[20px]">{id}</div>
       <div>{title}</div>
     </div>
   );

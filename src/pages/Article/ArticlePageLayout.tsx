@@ -5,7 +5,7 @@ const ArticlePageLayout = ({ children }: { children: any }) => {
     <>
       <div className="tabs tabs-boxed">
         <NavLink
-          to={`/article/new`}
+          to="/article/new"
           className={({ isActive }) =>
             isActive ? "tab rounded-[10px] text-[#FFFFFF] bg-[#FF9136]" : "tab"
           }
@@ -13,7 +13,7 @@ const ArticlePageLayout = ({ children }: { children: any }) => {
           게시글 작성
         </NavLink>
         <NavLink
-          to={`/article/edit`}
+          to="/article/edit"
           className={({ isActive }) =>
             isActive ? "tab rounded-[10px] text-[#FFFFFF] bg-[#FF9136]" : "tab"
           }
@@ -21,7 +21,7 @@ const ArticlePageLayout = ({ children }: { children: any }) => {
           게시글 수정
         </NavLink>
       </div>
-      <div>{children}</div>
+      <div className="overflow-scroll">{children}</div>
     </>
   );
 };

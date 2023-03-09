@@ -1,11 +1,13 @@
 import ContentEditor from "../../components/Editor";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import ArticleAPI from "../../api/ArticleAPI";
 import ArticlePageLayout from "./ArticlePageLayout";
+import EditorList from "./_fragment/EditorList";
+import ArticleAPI from "../../api/ArticleAPI";
 
 const ArticleWrite = () => {
   const editRef = useRef<any>(null);
+  const [checkedEditors, setCheckedEditors] = useState<number[]>([]);
   const {
     register,
     handleSubmit,
@@ -14,10 +16,10 @@ const ArticleWrite = () => {
 
   return (
     <ArticlePageLayout>
-      <div className={"w-full h-screen text-gray-900"}>
-        <div className={"w-full h-full"}>
+      <div className="w-full h-screen text-gray-900">
+        <div className="w-full h-full">
           <form
-            className={"w-full h-full"}
+            className="w-full h-full"
             onSubmit={handleSubmit(async (data) => {
               try {
                 const editor = editRef?.current?.getInstance();
@@ -45,8 +47,7 @@ const ArticleWrite = () => {
                   "data",
                   new Blob([JSON.stringify(form)], { type: "application/json" })
                 );
-                // const response = await ArticleAPI.postArticle(formData);
-                console.log(response);
+                const response = await ArticleAPI.postArticle(formData);
               } catch (e) {
                 console.log(e);
               }
@@ -54,11 +55,8 @@ const ArticleWrite = () => {
           >
             <div className="mx-2 my-4 p-2 md:mx-8 lg:mx-8">
               <div className="relative">
-                <label
-                  htmlFor="name"
-                  className="text-sm leading-7 text-gray-600"
-                >
-                  제목{" "}
+                <label htmlFor="name" className="text-sm leading-7 text-gray-600">
+                  제목
                 </label>
                 <input
                   {...register("title", { required: "제목을 입력해주세요." })}
@@ -69,11 +67,8 @@ const ArticleWrite = () => {
                   className="w-full rounded border border-gray-300 bg-gray-100 bg-opacity-50 py-1 px-3 text-base leading-8 text-gray-700 outline-none transition-colors duration-200 ease-in-out placeholder:text-sm focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200"
                 />
               </div>
-              <div className={"mt-5"}>
-                <label
-                  htmlFor="type"
-                  className="text-sm leading-7 text-gray-600"
-                >
+              <div className="mt-5">
+                <label htmlFor="type" className="text-sm leading-7 text-gray-600">
                   카테고리
                 </label>
                 <input
@@ -83,15 +78,21 @@ const ArticleWrite = () => {
                   type="text"
                   id="type"
                   name="type"
-                  placeholder="d"
+                  placeholder="카테코리를 입력해주세요."
                   className="w-full rounded border border-gray-300 bg-gray-100 bg-opacity-50 py-1 px-3 text-base leading-8 text-gray-700 outline-none transition-colors duration-200 ease-in-out placeholder:text-sm focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200"
                 />
               </div>
+              <div>
+                <EditorList
+                  setCheckedEditorList={setCheckedEditors}
+                  checkedEditorList={checkedEditors}
+                />
+              </div>
             </div>
-            <div className={"mt-20 h-4/6"}>
+            <div className="h-3/6 mx-2 p-2 md:mx-8 lg:mx-8">
               <ContentEditor editorRef={editRef} />
             </div>
-            <div className="bottom-0 flex h-12 w-full lg:h-14">
+            <div className="mt-10 flex h-12 w-full lg:h-14">
               <button className="flex-1 w-full bg-gray-500 text-sm font-medium text-white hover:bg-gray-700 md:text-base lg:text-base">
                 뒤로가기
               </button>
