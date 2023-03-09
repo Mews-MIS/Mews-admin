@@ -26,7 +26,7 @@ const UpdateEditor = () => {
     EditorAPI.getEditorAll().then((data) => {
       setEditors(data);
     });
-  }, [isDeleted]);
+  }, [isDeleted, editor]);
 
   const handleChangedFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const reader = new FileReader();
@@ -89,6 +89,7 @@ const UpdateEditor = () => {
       editorNameInputRef.current == null
     )
       return;
+    editor ? console.log(editor.id) : console.log("");
     const newEditor: Editor = {
       id: editor?.id,
       name: editorNameInputRef.current.value,
@@ -98,29 +99,33 @@ const UpdateEditor = () => {
     if (!dataValidCheck(newEditor)) return;
 
     if (confirm("해당 필진을 수정하시겠습니까?")) {
-      if (!imageFile) return;
       const newEditorString = JSON.stringify(newEditor);
 
       const formData = new FormData();
-      formData.append("file", imageFile);
+      imageFile !== null && formData.append("file", imageFile);
       formData.append(
         "data",
         new Blob([newEditorString], { type: "application/json" })
       );
-      console.log(formData);
       await EditorAPI.updateEditor(formData);
+      setEditor(newEditor);
+      await EditorAPI.getEditorAll().then((data) => {
+        setEditors(data);
+      });
     }
   };
   const showEditor = async (id: number) => {
     await EditorAPI.getEditor(id).then((res) => {
-      console.log(res);
-      const currentEditor: Editor = {
-        id: res.id,
-        name: res.name,
-        introduction: res.introduction,
-        file: res.imgUrl,
-      };
-      setEditor(currentEditor);
+      setEditor(res);
+      if (
+        fileInputRef.current == null ||
+        editorIntroTextareaRef.current == null ||
+        editorNameInputRef.current == null
+      )
+        return;
+      setImageURL(res.imgUrl);
+      editorNameInputRef.current.value = res.name;
+      editorIntroTextareaRef.current.value = res.introduction;
     });
   };
 
@@ -176,7 +181,7 @@ const UpdateEditor = () => {
             <div className={"h-full px-16"}>
               <div className={"mt-[20px] h-[20%] text-center"}>
                 <div className="w-[90px] h-[90px] rounded-full overflow-hidden bg-gray-300 border-solid border-2 border-gray-400 mx-auto mb-[10px] ">
-                  <img src={editor ? editor.file : imageURL?.toString()} />
+                  <img src={imageURL?.toString()} />
                 </div>
                 <label
                   htmlFor="file"
@@ -202,7 +207,6 @@ const UpdateEditor = () => {
                 </label>
                 <br />
                 <input
-                  defaultValue={editor ? editor.name : ""}
                   type="text"
                   id="editorName"
                   name="editorName"
@@ -220,7 +224,6 @@ const UpdateEditor = () => {
                 </label>
                 <br />
                 <textarea
-                  defaultValue={editor ? editor.introduction : ""}
                   id="editorIntro"
                   name="editorIntro"
                   placeholder="소개를 입력하세요"

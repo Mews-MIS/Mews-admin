@@ -74,11 +74,10 @@ const RegisterEditor = () => {
     if (!dataValidCheck(newEditor)) return;
 
     if (confirm("해당 필진을 등록하시겠습니까?")) {
-      if (!imageFile) return;
       const newEditorString = JSON.stringify(newEditor);
 
       const formData = new FormData();
-      formData.append("file", imageFile);
+      imageFile !== null && formData.append("file", imageFile);
       formData.append(
         "data",
         new Blob([newEditorString], { type: "application/json" })
