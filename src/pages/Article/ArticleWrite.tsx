@@ -2,8 +2,8 @@ import ContentEditor from "../../components/Editor";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import ArticlePageLayout from "./ArticlePageLayout";
-import EditorList from "./_fragment/EditorList";
 import ArticleAPI from "../../api/ArticleAPI";
+import EditorList from "./_fragment/EditorList";
 
 const ArticleWrite = () => {
   const editRef = useRef<any>(null);
