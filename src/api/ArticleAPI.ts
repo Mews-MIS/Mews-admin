@@ -4,10 +4,10 @@ const ArticleAPI = {
   postImageFile: async (uploadImages: any) => {
     try {
       const path = "file/upload";
-      const response = await HttpClient.post(path, uploadImages);
-      const { fileUrls } = response.response as {
-        fileUrls: string[];
-      };
+      const response = await HttpClient.post(path, uploadImages, {
+        "content-type": "multipart/form-data",
+      });
+      const { fileUrls } = response.data;
 
       return fileUrls;
     } catch (e) {
@@ -17,16 +17,14 @@ const ArticleAPI = {
 
   postArticle: async (articleFormData: any) => {
     try {
-      console.log(articleFormData);
       const path = "article/post";
       const response = await HttpClient.post(path, articleFormData, {
         "content-type": "multipart/form-data",
-        withCredentials: true,
       });
 
-      console.log(response.response);
+      console.log(response);
 
-      return response.response;
+      return response;
     } catch (e) {
       console.log(e);
     }
@@ -35,14 +33,20 @@ const ArticleAPI = {
   getPageArticles: async ({ page }: { page: number }) => {
     try {
       const path = "article/all";
-      const response = await HttpClient.get(
-        path,
-        { page },
-        { withCredentials: true }
-      );
-      console.log(response);
+      const response: {pageCount: number, articles:any} = await HttpClient.get(path, { page });
 
-      return response.response;
+      return response
+    } catch (e) {
+      console.log(e);
+    }
+  },
+
+  getArticleInfo: async (articleId: any) => {
+    try {
+      const path = `article/${articleId}`;
+      const response = await HttpClient.get(path);
+
+      return response;
     } catch (e) {
       console.log(e);
     }

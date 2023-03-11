@@ -17,25 +17,34 @@ const ContentEditor = ({ content = "", editorRef }: Props) => {
   ];
 
   return (
-    <Editor
-      ref={editorRef}
-      initialValue={content || " "}
-      height={"100%"}
-      previewStyle="vertical"
-      initialEditType="wysiwyg"
-      useCommandShortcut={false}
-      hideModeSwitch={true}
-      toolbarItems={toolbarItems}
-      language={"ko-KR"}
-      hooks={{
-        addImageBlobHook: async (blob, callback) => {
-          console.log(blob);
-
-          const imgUrls = await ArticleAPI.postImageFile(blob);
-          console.log(imgUrls);
-        },
-      }}
-    />
+    <>
+      <label htmlFor="name" className="text-sm leading-7 text-gray-600">
+        글쓰기
+      </label>
+      <Editor
+        ref={editorRef}
+        initialValue={content || " "}
+        height="100%"
+        previewStyle="vertical"
+        initialEditType="wysiwyg"
+        useCommandShortcut={false}
+        hideModeSwitch={true}
+        toolbarItems={toolbarItems}
+        language="ko-KR"
+        hooks={{
+          addImageBlobHook: async (blob, callback) => {
+            const formData = new FormData();
+            formData.append("file", blob);
+            try {
+              const response = await ArticleAPI.postImageFile(formData);
+              callback(response);
+            } catch (error) {
+              console.error(error);
+            }
+          },
+        }}
+      />
+    </>
   );
 };
 
