@@ -106,11 +106,14 @@ const UpdateEditor = () => {
         "data",
         new Blob([newEditorString], { type: "application/json" })
       );
-      await EditorAPI.updateEditor(formData);
+      await EditorAPI.updateEditor(formData).then((res) => {
+        if (res) {
+          alert("필진이 성공적으로 수정되었습니다.");
+        } else alert("필진 수정을 실패했습니다.");
+      });
       setEditor(newEditor);
       await EditorAPI.getEditorAll().then((data) => {
         setEditors(data);
-        alert("필진이 성공적으로 수정되었습니다.");
       });
     }
   };

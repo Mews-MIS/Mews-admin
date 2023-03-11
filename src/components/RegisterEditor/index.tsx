@@ -84,10 +84,13 @@ const RegisterEditor = () => {
         new Blob([newEditorString], { type: "application/json" })
       );
 
-      await EditorAPI.postRegisterEditor(formData);
+      await EditorAPI.postRegisterEditor(formData).then((res) => {
+        if (res) {
+          alert("필진이 성공적으로 등록되었습니다.");
+          resetData();
+        } else alert("필진 등록을 실패했습니다.");
+      });
     }
-    alert("필진이 성공적으로 등록되었습니다.");
-    resetData();
   };
 
   return (
