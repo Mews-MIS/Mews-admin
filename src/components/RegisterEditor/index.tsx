@@ -1,6 +1,5 @@
 import { useState, useRef } from "react";
 import EditorAPI from "../../api/EditorAPI";
-
 interface Editor {
   name: string;
   introduction: string;
@@ -13,14 +12,16 @@ const RegisterEditor = () => {
 
   const [imageURL, setImageURL] = useState<
     string | ArrayBuffer | undefined | null
-  >();
+  >(null);
   const [imageFile, setImageFile] = useState<File | null>(null);
 
   const handleChangedFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const reader = new FileReader();
     if (e.target.files) {
       reader.readAsDataURL(e.target.files[0]);
+      console.log(e.target.files[0]);
       setImageFile(e.target.files[0]);
+      console.log(imageFile);
     }
     reader.onloadend = () => {
       const resultImage = reader.result;
@@ -75,9 +76,11 @@ const RegisterEditor = () => {
 
     if (confirm("해당 필진을 등록하시겠습니까?")) {
       const newEditorString = JSON.stringify(newEditor);
-
       const formData = new FormData();
+
+      console.log(imageFile);
       imageFile !== null && formData.append("file", imageFile);
+
       formData.append(
         "data",
         new Blob([newEditorString], { type: "application/json" })
@@ -85,6 +88,8 @@ const RegisterEditor = () => {
 
       await EditorAPI.postRegisterEditor(formData);
     }
+    alert("필진이 성공적으로 등록되었습니다.");
+    resetData();
   };
 
   return (
@@ -95,6 +100,7 @@ const RegisterEditor = () => {
             <div className={"mt-[20px] h-[20%] text-center"}>
               <div className="w-[100px] h-[100px] rounded-full overflow-hidden bg-gray-300 border-solid border-2 border-gray-400 mx-auto mb-[10px] ">
                 <img
+                  className="w-full h-full"
                   src={imageURL?.toString()}
                   onClick={() => {
                     console.log(imageURL?.toString());
@@ -153,7 +159,11 @@ const RegisterEditor = () => {
               <div className="flex flex-row w-2/3 h-1/6 lg:h-[40px]">
                 <button
                   className="flex-1 w-1/3 bg-gray-300 text-sm font-medium rounded-lg text-white hover:bg-gray-400 mr-8 md:text-base lg:text-base"
-                  onClick={resetData}
+                  onClick={() => {
+                    if (confirm("정말 입력한 정보를 초기화하시겠습니까?")) {
+                      resetData();
+                    }
+                  }}
                 >
                   취소
                 </button>

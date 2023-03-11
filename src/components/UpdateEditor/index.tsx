@@ -46,21 +46,20 @@ const UpdateEditor = () => {
       console.log(id);
       await EditorAPI.deleteEditor(id);
       setIsDeleted(!isDeleted);
+      resetData();
     }
   };
 
   const resetData = () => {
-    if (confirm("정말 입력값을 초기화하겠습니까?")) {
-      if (
-        fileInputRef.current != null &&
-        editorIntroTextareaRef.current != null &&
-        editorNameInputRef.current != null
-      ) {
-        fileInputRef.current.value = "";
-        editorNameInputRef.current.value = "";
-        editorIntroTextareaRef.current.value = "";
-        setImageURL("");
-      }
+    if (
+      fileInputRef.current != null &&
+      editorIntroTextareaRef.current != null &&
+      editorNameInputRef.current != null
+    ) {
+      fileInputRef.current.value = "";
+      editorNameInputRef.current.value = "";
+      editorIntroTextareaRef.current.value = "";
+      setImageURL("");
     }
   };
 
@@ -113,7 +112,9 @@ const UpdateEditor = () => {
         setEditors(data);
       });
     }
+    alert("필진이 성공적으로 수정되었습니다.");
   };
+
   const showEditor = async (id: number) => {
     await EditorAPI.getEditor(id).then((res) => {
       setEditor(res);
@@ -235,7 +236,11 @@ const UpdateEditor = () => {
                 <div className="flex flex-row w-2/3 h-1/6 lg:h-[40px]">
                   <button
                     className="flex-1 w-1/3 bg-gray-300 text-sm font-medium rounded-lg text-white hover:bg-gray-400 mr-8 md:text-base lg:text-base"
-                    onClick={resetData}
+                    onClick={() => {
+                      if (confirm("정말 입력한 정보를 초기화하시겠습니까?")) {
+                        resetData();
+                      }
+                    }}
                   >
                     취소
                   </button>
