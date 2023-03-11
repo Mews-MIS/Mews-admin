@@ -19,9 +19,7 @@ const RegisterEditor = () => {
     const reader = new FileReader();
     if (e.target.files) {
       reader.readAsDataURL(e.target.files[0]);
-      console.log(e.target.files[0]);
       setImageFile(e.target.files[0]);
-      console.log(imageFile);
     }
     reader.onloadend = () => {
       const resultImage = reader.result;
@@ -99,13 +97,7 @@ const RegisterEditor = () => {
           <div className={"w-1/2 min-w-[400px] h-[90%] px-16 mx-auto"}>
             <div className={"mt-[20px] h-[20%] text-center"}>
               <div className="w-[100px] h-[100px] rounded-full overflow-hidden bg-gray-300 border-solid border-2 border-gray-400 mx-auto mb-[10px] ">
-                <img
-                  className="w-full h-full"
-                  src={imageURL?.toString()}
-                  onClick={() => {
-                    console.log(imageURL?.toString());
-                  }}
-                />
+                <img className="w-full h-full" src={imageURL?.toString()} />
               </div>
               <label
                 htmlFor="file"

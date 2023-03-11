@@ -110,9 +110,9 @@ const UpdateEditor = () => {
       setEditor(newEditor);
       await EditorAPI.getEditorAll().then((data) => {
         setEditors(data);
+        alert("필진이 성공적으로 수정되었습니다.");
       });
     }
-    alert("필진이 성공적으로 수정되었습니다.");
   };
 
   const showEditor = async (id: number) => {
@@ -137,7 +137,7 @@ const UpdateEditor = () => {
           <div className={"flex flex-col w-1/2 h-full px-16"}>
             <div className={"w-full h-4/6 mt-[20px]"}>
               <p className="text-md leading-loose text-gray-600">필진 목록</p>
-              <div className="flex overflow-scroll border-solid border-gray-500 border-2 w-full h-[450px]">
+              <div className="flex overflow-scroll border-solid border-gray-500 border-2 w-full h-[550px]">
                 <div className="flex-col flex-nowrap w-full">
                   {editors
                     ? editors.map((data, index) => (
@@ -182,7 +182,7 @@ const UpdateEditor = () => {
             <div className={"h-full px-16"}>
               <div className={"mt-[20px] h-[20%] text-center"}>
                 <div className="w-[90px] h-[90px] rounded-full overflow-hidden bg-gray-300 border-solid border-2 border-gray-400 mx-auto mb-[10px] ">
-                  <img src={imageURL?.toString()} />
+                  <img className="w-full h-full" src={imageURL?.toString()} />
                 </div>
                 <label
                   htmlFor="file"
