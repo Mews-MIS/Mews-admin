@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_SERVER_BASE_URL,
+  // baseURL: import.meta.env.local.VITE_SERVER_BASE_URL,
+  baseURL: "http://13.209.163.188:8080/",
   // withCredentials: true,
   // headers: {
   //   Authorization: import.meta.env.VITE_TMP_ACCESS_TOKEN,
@@ -20,7 +21,7 @@ const HttpClient = {
   },
 
   fetch: async (path: string, body: unknown, headers = {}) => {
-    const response = await axiosInstance.put(path, body, { headers });
+    const response = await axiosInstance.patch(path, body, { headers });
     return response.data;
   },
 
