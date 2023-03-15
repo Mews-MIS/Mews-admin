@@ -8,6 +8,7 @@ import EditorList from "./_fragment/EditorList";
 const ArticleWrite = () => {
   const editRef = useRef<any>(null);
   const [checkedEditors, setCheckedEditors] = useState<number[]>([]);
+  const [imageFiles, setImageFiles] = useState<string[]>([]);
   const {
     register,
     handleSubmit,
@@ -25,6 +26,8 @@ const ArticleWrite = () => {
                 const editor = editRef?.current?.getInstance();
                 const contentMark = editor.getMarkdown();
 
+                console.log(contentMark);
+
                 if (contentMark?.length === 0) {
                   throw new Error("내용을 입력해주세요.");
                 }
@@ -33,20 +36,16 @@ const ArticleWrite = () => {
                 const form = {
                   title: data.title as string,
                   content: contentMark,
-                  type: "article",
-                  fileUrls: [
-                    "https://mewsbucket.s3.ap-northeast-2.amazonaws.com/c8ef5c78-dbe4-4cd4-976d-72a48ad8d914.png",
-                    "https://mewsbucket.s3.ap-northeast-2.amazonaws.com/bee2593f-2e85-4c0c-b076-b8217c5a8280.png",
-                  ],
-                  editors: [1, 2],
+                  type: data.type,
+                  fileUrls: imageFiles,
+                  editors: checkedEditors,
                 };
-
-                console.log(form);
 
                 formData.append(
                   "data",
                   new Blob([JSON.stringify(form)], { type: "application/json" })
                 );
+                console.log(JSON.stringify(form));
                 const response = await ArticleAPI.postArticle(formData);
               } catch (e) {
                 console.log(e);
@@ -90,7 +89,11 @@ const ArticleWrite = () => {
               </div>
             </div>
             <div className="h-3/6 mx-2 p-2 md:mx-8 lg:mx-8">
-              <ContentEditor editorRef={editRef} />
+              <ContentEditor
+                editorRef={editRef}
+                imageFiles={imageFiles}
+                setImageFiles={setImageFiles}
+              />
             </div>
             <div className="mt-10 flex h-12 w-full lg:h-14">
               <button className="flex-1 w-full bg-gray-500 text-sm font-medium text-white hover:bg-gray-700 md:text-base lg:text-base">

@@ -18,7 +18,7 @@ const EditorAPI = {
   getEditorAll: async () => {
     try {
       const path = "/editor/getall";
-      const response = await HttpClient.get(path, {});
+      const response = await HttpClient.get(path);
       console.log(response);
 
       return response;
