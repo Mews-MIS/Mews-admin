@@ -64,7 +64,7 @@ const ArticleEditList = () => {
       color: white;
     }
     ul.pagination li.active {
-      background-color: #ff9136;
+      background-color: "#FF9136";
     }
     ul.pagination li a:hover,
     ul.pagination li a.active {

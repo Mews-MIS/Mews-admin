@@ -33,7 +33,7 @@ const ArticleEditList = () => {
       justify-content: center;
       margin-top: 15px;
       margin-bottom: 15px;
-      font-weight: 600;
+      font-weight: ${theme.FONT_WEIGHT.BOLD};
       background-color: "#FFFFFF";
     }
     ul {
@@ -49,7 +49,7 @@ const ArticleEditList = () => {
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: "3rem";
+      font-size: ${theme.FONT_SIZE.SMALL_SIZE};
     }
     ul.pagination li:first-child {
       border-radius: 5px 0 0 5px;
@@ -64,7 +64,7 @@ const ArticleEditList = () => {
       color: white;
     }
     ul.pagination li.active {
-      background-color: #ff9136;
+      background-color: #ffbd29;
     }
     ul.pagination li a:hover,
     ul.pagination li a.active {
