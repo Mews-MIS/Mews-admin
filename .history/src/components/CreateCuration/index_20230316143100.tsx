@@ -74,12 +74,12 @@ const CreateCuration = () => {
   }, [page]);
 
   // + 클릭시 전체글에서 삭제 후 새로운 배열로 추가
-  const onClickAddButton = () => {
+  const onClickAddButton = async (id: number) => {
     if (confirm("해당 기사를 추가하시겠습니까?")) {
-      const checkedCurationList = allCurationList.concat({
-        checked: false,
-      });
+      console.log(id);
+      await CurationAPI.deleteEditor(id);
       setIsDeleted(!isDeleted);
+      resetData();
     }
   };
   return (

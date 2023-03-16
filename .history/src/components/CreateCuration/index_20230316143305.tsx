@@ -77,9 +77,10 @@ const CreateCuration = () => {
   const onClickAddButton = () => {
     if (confirm("해당 기사를 추가하시겠습니까?")) {
       const checkedCurationList = allCurationList.concat({
-        checked: false,
-      });
+        checked: false;
+      })
       setIsDeleted(!isDeleted);
+      resetData();
     }
   };
   return (

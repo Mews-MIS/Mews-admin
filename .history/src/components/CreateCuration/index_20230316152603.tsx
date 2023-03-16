@@ -80,6 +80,7 @@ const CreateCuration = () => {
         checked: false,
       });
       setIsDeleted(!isDeleted);
+      resetData();
     }
   };
   return (

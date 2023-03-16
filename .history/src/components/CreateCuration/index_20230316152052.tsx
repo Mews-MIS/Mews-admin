@@ -80,6 +80,7 @@ const CreateCuration = () => {
         checked: false,
       });
       setIsDeleted(!isDeleted);
+      resetData();
     }
   };
   return (
@@ -111,12 +112,13 @@ const CreateCuration = () => {
                           key={data.id}
                           className="font-bold border border-gray-300 w-full h-12 flex items-center"
                         >
-                          <button
+                        <input type = checkbox
+                          {/* <button
                             className="w-[20px] h-[20px] rounded-full text-center my-auto mx-3 text-sm bg-gray-500 text-white hover:bg-gray-600"
                             // onClick={() => data.id != null && deleteEditor(data.id)}
                           >
                             +
-                          </button>
+                          </button> */}
                           {data.title}
                         </div>
                       );
