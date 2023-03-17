@@ -3,7 +3,7 @@ import EditorAPI from "../api/EditorAPI";
 
 const useEditorList = () => {
   const { data } = useQuery("editors", async () => {
-    const editorList = await EditorAPI.getAllEditor();
+    const editorList = await EditorAPI.getEditorAll();
     return editorList;
   });
 

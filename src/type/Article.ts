@@ -10,4 +10,6 @@ export type Article = {
 
   like_count: number;
   type: string;
+
+  pageCount: number;
 };
