@@ -156,7 +156,7 @@ const CreateCuration = () => {
 
           <div className="w-1/2">
             <p className="font-bold">전체 글</p>
-            <div className="h-4/5 w-4/5  overflow-auto border border-gray-500">
+            <div className="h-4/5 w-4/5  border border-gray-500">
               <div className="flex-col flex-nowrap w-full">
                 <div className="flex-col flex-nowrap w-full">
                   {articles &&
@@ -177,18 +177,18 @@ const CreateCuration = () => {
                       );
                     })}
                 </div>
+                <div>
+                  <PaginationBox className="">
+                    <Pagination
+                      activePage={page}
+                      itemsCountPerPage={itemsCountPerPage}
+                      totalItemsCount={totalItemsCount}
+                      pageRangeDisplayed={5}
+                      onChange={onclickPageChange}
+                    />
+                  </PaginationBox>
+                </div>
               </div>
-            </div>
-            <div>
-              <PaginationBox className="fixed">
-                <Pagination
-                  activePage={page}
-                  itemsCountPerPage={itemsCountPerPage}
-                  totalItemsCount={totalItemsCount}
-                  pageRangeDisplayed={5}
-                  onChange={onclickPageChange}
-                />
-              </PaginationBox>
             </div>
           </div>
         </div>

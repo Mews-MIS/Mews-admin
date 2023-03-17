@@ -4,7 +4,6 @@ import CurationAdd from "../../assets/Icon/CurationAdd.svg";
 import CurationAPI from "../../api/CurationAPI";
 import Pagination from "react-js-pagination";
 import styled from "styled-components";
-import ArticleAPI from "../../api/ArticleAPI";
 
 export interface Curation {
   list: [];
@@ -71,7 +70,7 @@ const CreateCuration = () => {
 
   useEffect(() => {
     const getArticles = async () => {
-      const response = await CurationAPI.getCuraitonAll({ page });
+      const response = await ArticleAPI.getPageArticles({ page });
       await setArticles(response!.articles);
       setTotalItemsCount(Math.ceil(response!.pageCount * itemsCountPerPage));
     };
@@ -156,7 +155,7 @@ const CreateCuration = () => {
 
           <div className="w-1/2">
             <p className="font-bold">전체 글</p>
-            <div className="h-4/5 w-4/5  overflow-auto border border-gray-500">
+            <div className="h-4/5 w-4/5  overflow-y-scroll border border-gray-500">
               <div className="flex-col flex-nowrap w-full">
                 <div className="flex-col flex-nowrap w-full">
                   {articles &&
@@ -177,18 +176,16 @@ const CreateCuration = () => {
                       );
                     })}
                 </div>
+                <PaginationBox>
+                  <Pagination
+                    activePage={page}
+                    itemsCountPerPage={itemsCountPerPage}
+                    totalItemsCount={totalItemsCount}
+                    pageRangeDisplayed={5}
+                    onChange={onclickPageChange}
+                  />
+                </PaginationBox>
               </div>
-            </div>
-            <div>
-              <PaginationBox className="fixed">
-                <Pagination
-                  activePage={page}
-                  itemsCountPerPage={itemsCountPerPage}
-                  totalItemsCount={totalItemsCount}
-                  pageRangeDisplayed={5}
-                  onChange={onclickPageChange}
-                />
-              </PaginationBox>
             </div>
           </div>
         </div>

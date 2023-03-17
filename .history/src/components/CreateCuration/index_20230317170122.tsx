@@ -4,7 +4,6 @@ import CurationAdd from "../../assets/Icon/CurationAdd.svg";
 import CurationAPI from "../../api/CurationAPI";
 import Pagination from "react-js-pagination";
 import styled from "styled-components";
-import ArticleAPI from "../../api/ArticleAPI";
 
 export interface Curation {
   list: [];
@@ -72,61 +71,10 @@ const CreateCuration = () => {
   useEffect(() => {
     const getArticles = async () => {
       const response = await CurationAPI.getCuraitonAll({ page });
-      await setArticles(response!.articles);
-      setTotalItemsCount(Math.ceil(response!.pageCount * itemsCountPerPage));
+      await setAllCurationList(response!.articles);
     };
-
     getArticles();
   }, [page]);
-
-  const onclickPageChange = (pageNumber: number) => {
-    setPage(pageNumber);
-  };
-
-  const PaginationBox = styled.div`
-    .pagination {
-      display: flex;
-      justify-content: center;
-      margin-top: 15px;
-      margin-bottom: 15px;
-      font-weight: 600;
-      background-color: "#FFFFFF";
-    }
-    ul {
-      list-style: none;
-      padding: 0;
-    }
-    ul.pagination li {
-      display: inline-block;
-      width: 30px;
-      height: 30px;
-      border: none;
-      border-radius: 10px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: "3rem";
-    }
-    ul.pagination li:first-child {
-      border-radius: 5px 0 0 5px;
-    }
-    ul.pagination li:last-child {
-      border-radius: 0 5px 5px 0;
-    }
-    ul.pagination li a {
-      text-decoration: none;
-    }
-    ul.pagination li.active a {
-      color: white;
-    }
-    ul.pagination li.active {
-      background-color: #ff9136;
-    }
-    ul.pagination li a:hover,
-    ul.pagination li a.active {
-      color: blue;
-    }
-  `;
 
   // + 클릭시 전체글에서 삭제 후 새로운 배열로 추가
   const onClickAddButton = () => {
@@ -156,11 +104,11 @@ const CreateCuration = () => {
 
           <div className="w-1/2">
             <p className="font-bold">전체 글</p>
-            <div className="h-4/5 w-4/5  overflow-auto border border-gray-500">
+            <div className="h-4/5 w-4/5  overflow-y-scroll border border-gray-500">
               <div className="flex-col flex-nowrap w-full">
                 <div className="flex-col flex-nowrap w-full">
-                  {articles &&
-                    articles.map((data: AllArticle) => {
+                  {allCurationList &&
+                    allCurationList.map((data: AllArticle) => {
                       return (
                         <div
                           key={data.id}
@@ -178,17 +126,6 @@ const CreateCuration = () => {
                     })}
                 </div>
               </div>
-            </div>
-            <div>
-              <PaginationBox className="fixed">
-                <Pagination
-                  activePage={page}
-                  itemsCountPerPage={itemsCountPerPage}
-                  totalItemsCount={totalItemsCount}
-                  pageRangeDisplayed={5}
-                  onChange={onclickPageChange}
-                />
-              </PaginationBox>
             </div>
           </div>
         </div>
