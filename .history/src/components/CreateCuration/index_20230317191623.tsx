@@ -67,6 +67,7 @@ const CreateCuration = () => {
   const [page, setPage] = useState<number>(1);
   const [totalItemsCount, setTotalItemsCount] = useState<number>(0);
   const itemsCountPerPage = 10;
+  // const [allCuration, setAllCuration] = useState<AllCuration | null>(null);
 
   useEffect(() => {
     const getArticles = async () => {
