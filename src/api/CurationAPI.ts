@@ -15,7 +15,7 @@ const CurationAPI = {
       console.log(e);
     }
   },
-  // 모든 기사 불러오기
+
   getCuraitonAll: async ({ page }: { page: number }) => {
     try {
       const path = "article/all";
