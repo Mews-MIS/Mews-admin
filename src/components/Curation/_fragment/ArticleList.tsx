@@ -41,10 +41,10 @@ const CurationArticleList = ({
     const value = Number(target.value);
 
     if (target.checked) {
-      // Add the checked article's id to the state array
+      // Add the checked article's title to the state array
       setCheckedArticleList((prevState: any) => [...prevState, value]);
     } else {
-      // Remove the unchecked article's id from the state array
+      // Remove the unchecked article's title from the state array
       setCheckedArticleList((prevState: any) => prevState.filter((id: number) => id !== value));
     }
   };
