@@ -10,9 +10,7 @@ const RegisterEditor = () => {
   const editorNameInputRef = useRef<HTMLInputElement | null>(null);
   const editorIntroTextareaRef = useRef<HTMLTextAreaElement | null>(null);
 
-  const [imageURL, setImageURL] = useState<
-    string | ArrayBuffer | undefined | null
-  >(null);
+  const [imageURL, setImageURL] = useState<string | ArrayBuffer | undefined | null>(null);
   const [imageFile, setImageFile] = useState<File | null>(null);
 
   const handleChangedFile = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -79,10 +77,7 @@ const RegisterEditor = () => {
       console.log(imageFile);
       imageFile !== null && formData.append("file", imageFile);
 
-      formData.append(
-        "data",
-        new Blob([newEditorString], { type: "application/json" })
-      );
+      formData.append("data", new Blob([newEditorString], { type: "application/json" }));
 
       await EditorAPI.postRegisterEditor(formData).then((res) => {
         if (res) {
@@ -102,10 +97,7 @@ const RegisterEditor = () => {
               <div className="w-[100px] h-[100px] rounded-full overflow-hidden bg-gray-300 border-solid border-2 border-gray-400 mx-auto mb-[10px] ">
                 <img className="w-full h-full" src={imageURL?.toString()} />
               </div>
-              <label
-                htmlFor="file"
-                className="text-blue-600 text-sm hover:cursor-pointer"
-              >
+              <label htmlFor="file" className="text-blue-600 text-sm hover:cursor-pointer">
                 프로필 사진 수정
               </label>
               <input
@@ -118,10 +110,7 @@ const RegisterEditor = () => {
               ></input>
             </div>
             <div className="w-full h-[20%] mt-10 mb-0">
-              <label
-                htmlFor="name"
-                className="text-md leading-loose text-gray-600"
-              >
+              <label htmlFor="name" className="text-md leading-loose text-gray-600">
                 필진 이름
               </label>
               <br />
@@ -135,10 +124,7 @@ const RegisterEditor = () => {
               ></input>
             </div>
             <div className="w-full h-[40%]">
-              <label
-                htmlFor="name"
-                className="text-md leading-loose text-gray-600"
-              >
+              <label htmlFor="name" className="text-md leading-loose text-gray-600">
                 필진 소개
               </label>
               <br />
@@ -150,26 +136,7 @@ const RegisterEditor = () => {
                 className="w-full h-[90%] text-md px-4 py-2 border-2 border-gray-500 rounded-md shadow-sm resize-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 md:text-md"
               ></textarea>
             </div>
-            <div className="w-full flex mt-10 justify-end">
-              <div className="flex flex-row w-2/3 h-1/6 lg:h-[40px]">
-                <button
-                  className="flex-1 w-1/3 bg-gray-300 text-sm font-medium rounded-lg text-white hover:bg-gray-400 mr-8 md:text-base lg:text-base"
-                  onClick={() => {
-                    if (confirm("정말 입력한 정보를 초기화하시겠습니까?")) {
-                      resetData();
-                    }
-                  }}
-                >
-                  취소
-                </button>
-                <button
-                  className="w-1/3 flex-1 text-sm font-medium rounded-lg text-white hover:bg-[#FFBD29] bg-[#FF9136] md:text-base lg:text-base"
-                  onClick={registerEditor}
-                >
-                  등록
-                </button>
-              </div>
-            </div>
+            <div className="w-full flex mt-10 justify-end"></div>
           </div>
           {/* 목록 */}
           {/* <div className={"flex flex-col w-1/2 h-screen px-16"}>
