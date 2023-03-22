@@ -24,7 +24,7 @@ const CurationArticleList = ({
 
   useEffect(() => {
     const getArticles = async () => {
-      const response = await CurationAPI.getCuraitonAll({ page });
+      const response = await CurationAPI.getArticleAll({ page });
       await setArticles(response!.articles);
       setTotalItemsCount(Math.ceil(response!.pageCount * itemsCountPerPage));
     };

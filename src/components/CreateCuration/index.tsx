@@ -8,6 +8,11 @@ export interface CurationPostProps {
   title: string;
 }
 
+export interface GetAllCurationProps {
+  allcuration: [{ id: number; title: string }];
+  checked: [{ id: number; title: string }];
+}
+
 const CreateCuration = () => {
   const [checkedArticles, setCheckedArticles] = useState<number[]>([]);
   const [title, setTitle] = useState("");
@@ -25,7 +30,7 @@ const CreateCuration = () => {
 
   return (
     <div className="w-full h-screen text-gray-900">
-      <div className="w-full h-full pl-8 pt-8">
+      <div className="w-full h-full pl-8 pt-8 flex justify-center flex-col">
         <p className="text-md font-bold">큐레이션 제목</p>
         <input
           type="text"
