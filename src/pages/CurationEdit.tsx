@@ -1,5 +1,6 @@
 import { useState } from "react";
 import CreateCuration from "../components/CreateCuration";
+import UpdateCuration from "../components/UpdateCuration";
 
 const CurationEdit = () => {
   const [curationPage, setCurationPage] = useState("create");
@@ -18,18 +19,18 @@ const CurationEdit = () => {
                 >
                   생성
                 </span>
-                {/* <span
+                <span
                   className={`px-[5px] cursor-pointer ${
-                    currentPage === "update" ? "text-orange-400 font-[600]" : ""
+                    curationPage === "update" ? "text-orange-400 font-[600]" : ""
                   }`}
-                  onClick={() => setCurrentPage("update")}
+                  onClick={() => setCurationPage("update")}
                 >
                   수정
-                </span> */}
+                </span>
               </div>
             </div>
             {curationPage == "create" && <CreateCuration />}
-            {/* {curationPage == "update" && <UpdateEditor />} */}
+            {curationPage == "update" && <UpdateCuration />}
           </div>
         </div>
       </div>

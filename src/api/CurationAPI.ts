@@ -33,6 +33,17 @@ const CurationAPI = {
       console.log(e);
     }
   },
+  getCurationId: async (id: number) => {
+    try {
+      const path = "/curation/{id}";
+      const response = await HttpClient.get(path, id);
+      console.log(response);
+
+      return response;
+    } catch (e) {
+      console.log(e);
+    }
+  },
   updateCuration: async (changeCuration: any) => {
     try {
       const path = `/curation/update`;

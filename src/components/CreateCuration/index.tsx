@@ -4,13 +4,9 @@ import * as s from "./styles";
 import CurationArticleList from "../Curation/_fragment/ArticleList";
 
 export interface CurationPostProps {
+  id?: number;
   list: number[];
   title: string;
-}
-
-export interface GetAllCurationProps {
-  allcuration: [{ id: number; title: string }];
-  checked: [{ id: number; title: string }];
 }
 
 const CreateCuration = () => {
