@@ -50,10 +50,10 @@ const CurationArticleList = ({
   };
 
   return (
-    <div className="flex h-4/5 justify-center mt-2">
+    <div className="flex w-full h-4/5 justify-center mt-2">
       <div className="w-full">
-        <p className="font-bold">전체 글</p>
-        <div className="h-4/5 w-4/5 overflow-auto border border-gray-500">
+        <p className="font-bold">글 목록</p>
+        <div className="h-4/5 overflow-auto border border-gray-500">
           <div className="flex-col flex-nowrap w-full">
             <div className="flex-col flex-nowrap w-full">
               {articles &&

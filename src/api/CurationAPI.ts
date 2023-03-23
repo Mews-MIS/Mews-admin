@@ -35,8 +35,8 @@ const CurationAPI = {
   },
   getCurationId: async (id: number) => {
     try {
-      const path = "/curation/{id}";
-      const response = await HttpClient.get(path, id);
+      const path = `/curation/${id}`;
+      const response = await HttpClient.get(path, {});
       console.log(response);
 
       return response;
