@@ -1,13 +1,8 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import CurationAPI from "../../../api/CurationAPI";
-import Pagination from "react-js-pagination";
+import usePostByPageNumber from "../../../hook/useNewAricle";
+import Paging from "../../../components/Pagination";
 import * as s from "./styles";
-
-export interface AllArticle {
-  id: number;
-  title: string;
-  pageCount: number;
-}
 
 const CurationArticleList = ({
   checkedArticleList,
@@ -17,23 +12,25 @@ const CurationArticleList = ({
   setCheckedArticleList: Dispatch<SetStateAction<number[]>>;
 }) => {
   // 모든 기사들 불러오기
-  const [articles, setArticles] = useState([]);
-  const [page, setPage] = useState<number>(1);
+  const [article, setArticle] = useState([]);
+  const [pageNumber, setPageNumber] = useState(1);
   const [totalItemsCount, setTotalItemsCount] = useState<number>(0);
+  const { data, isLoading } = usePostByPageNumber(pageNumber);
   const itemsCountPerPage = 10;
 
   useEffect(() => {
-    const getArticles = async () => {
-      const response = await CurationAPI.getArticleAll({ page });
-      await setArticles(response!.articles);
-      setTotalItemsCount(Math.ceil(response!.pageCount * itemsCountPerPage));
-    };
+    CurationAPI.getPageArticles(1, {}).then((data: any) => {
+      setArticle(data.articles);
+      setTotalItemsCount(Math.ceil(data.pageCount * itemsCountPerPage));
+    });
+  }, []);
 
-    getArticles();
-  }, [page]);
+  if (isLoading) {
+    return <h1>로딩중</h1>;
+  }
 
-  const onclickPageChange = (pageNumber: number) => {
-    setPage(pageNumber);
+  const setPage = (e: number) => {
+    setPageNumber(e);
   };
 
   const handleCheckboxChange = (event: any) => {
@@ -56,21 +53,22 @@ const CurationArticleList = ({
         <div className="h-4/5 overflow-auto border border-gray-500">
           <div className="flex-col flex-nowrap w-full">
             <div className="flex-col flex-nowrap w-full">
-              {articles &&
-                articles.map((data: AllArticle) => {
+              {data?.articles &&
+                data.articles.map((element: any, index: number) => {
+                  const articleInfo = element.article;
                   return (
                     <div
-                      key={data.id}
+                      key={index}
                       className="font-bold border border-gray-300 w-full h-12 flex items-center"
                     >
                       <input
                         type="checkbox"
-                        value={data.id}
-                        checked={checkedArticleList.includes(data.id)}
+                        value={articleInfo.id}
+                        checked={checkedArticleList.includes(articleInfo.id)}
                         onChange={handleCheckboxChange}
                         className="w-8 h-8 mr-2 ml-2 text-orange-500 bg-gray-100 border-gray-300 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                       />
-                      {data.title}
+                      {articleInfo.title}
                     </div>
                   );
                 })}
@@ -78,15 +76,7 @@ const CurationArticleList = ({
           </div>
         </div>
         <div>
-          <s.PaginationBox>
-            <Pagination
-              activePage={page}
-              itemsCountPerPage={itemsCountPerPage}
-              totalItemsCount={totalItemsCount}
-              pageRangeDisplayed={5}
-              onChange={onclickPageChange}
-            />
-          </s.PaginationBox>
+          <Paging page={pageNumber} count={totalItemsCount} setPage={setPage} />
         </div>
       </div>
     </div>

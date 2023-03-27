@@ -30,14 +30,14 @@ const ArticleAPI = {
     }
   },
 
-  getPageArticles: async ({ page }: { page: number }) => {
+  getPageArticles: async (page: number, header: any) => {
     try {
       const path = "article/all";
-      const response: { pageCount: number; articles: any } = await HttpClient.get(path, { page });
-
+      const response = await HttpClient.get(path, { page }, { header });
       return response;
     } catch (e) {
       console.log(e);
+      return null;
     }
   },
 

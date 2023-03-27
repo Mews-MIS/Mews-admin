@@ -16,11 +16,11 @@ export interface CurationAllProps {
 }
 
 const UpdateCuration = () => {
-  const [curations, setCurations] = useState<CurationAllProps>();
+  const [curations, setCurations] = useState<CurationAllProps | undefined>();
   const [curation, setCuration] = useState<CurationPostProps>();
-  const [curatinId, setCurationId] = useState<number>(0);
   const [checkedArticles, setCheckedArticles] = useState<number[]>([]);
   const [title, setTitle] = useState("");
+  // const [isDeleted, setIsDeleted] = useState<boolean>(false);
 
   useEffect(() => {
     CurationAPI.getAllCuration(curations).then((data) => {
@@ -28,13 +28,39 @@ const UpdateCuration = () => {
     });
   }, []);
 
+  const handleTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.value);
+    setTitle(e.target.value);
+  };
+
   const showCuration = async (id: number) => {
     try {
       const res = await CurationAPI.getCurationId(id);
       setCuration(res);
+      console.log("ssssssssss", res);
       setTitle(res.title);
-      setCheckedArticles([res.list[0].article.id]);
-      console.log("--------", checkedArticles);
+
+      const articleIds: number[] | ((prevState: number[]) => number[]) = [];
+      res.list.forEach((obj) => {
+        const article = obj.article;
+        if (article) {
+          articleIds.push(article.id);
+        }
+      });
+      setCheckedArticles(articleIds);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const deleteCuration = async (id: number) => {
+    try {
+      await CurationAPI.deleteCurationId(id);
+      setCurations((prevState: any) => {
+        return {
+          ...prevState,
+          allCuration: prevState.allCuration.filter((curation) => curation.id !== id),
+        };
+      });
     } catch (error) {
       console.log(error);
     }
@@ -47,14 +73,18 @@ const UpdateCuration = () => {
           <p className="text-md font-bold">생성된 큐레이션</p>
           <div className="flex flex-col justify-center mt-2">
             {curations?.allCuration &&
+              curations.allCuration.length > 0 &&
               curations.allCuration.map((data, index) => (
                 <div
-                  key={index}
+                  key={data.id}
                   className="flex flex-row items-center border-solid border-[1px] w-5/6 h-[45px] cursor-pointer"
                   onClick={() => data.id != null && showCuration(data.id)}
                 >
-                  {/* // onClick={() => data.id != null && deleteEditor(data.id)} */}
-                  <s.DeleteBtn src={DeleteScheduleItem} alt="삭제버튼" />
+                  <s.DeleteBtn
+                    src={DeleteScheduleItem}
+                    alt="삭제버튼"
+                    onClick={() => deleteCuration(data.id)}
+                  />
                   <div className="text-lg ml-2 font-bold">{data.title}</div>
                 </div>
               ))}
@@ -70,7 +100,7 @@ const UpdateCuration = () => {
               value={title}
               placeholder="큐레이션 제목을 입력해주세요"
               className="p-4 w-full text-md border-gray-500 focus:outline-none focus:ring-indigo-500"
-              // onChange={handleTitle}
+              onChange={handleTitle}
             />
             <div className="flex h-4/5 mt-2 w-full">
               <CurationArticleList
@@ -91,8 +121,7 @@ const UpdateCuration = () => {
               </button>
               <button
                 className="text-sm font-medium flex items-center p-6 rounded-lg text-white hover:bg-[#FFBD29] bg-[#FF9136] md:text-base lg:text-base"
-                type="submit"
-                // onClick={addCuration}
+                // onClick={changeCuration}
               >
                 수정
               </button>

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import CurationAPI from "../../api/CurationAPI";
-import * as s from "./styles";
 import CurationArticleList from "../Curation/_fragment/ArticleList";
 
 export interface CurationPostProps {
