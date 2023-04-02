@@ -1,9 +1,9 @@
 import { useQuery } from "react-query";
-import CurationAPI from "../api/CurationAPI";
+import ArticleAPI from "../api/ArticleAPI";
 
 const usePostByPageNumber = (pageNumber: number) => {
   const { data, isLoading } = useQuery(["posts", pageNumber], async () => {
-    const posts = await CurationAPI.getPageArticles(pageNumber, {});
+    const posts = await ArticleAPI.getPageArticles(pageNumber, {});
     return posts;
   });
 
