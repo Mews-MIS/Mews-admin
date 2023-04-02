@@ -3,7 +3,6 @@ import CurationAPI from "../../api/CurationAPI";
 import CurationArticleList from "../Curation/_fragment/ArticleList";
 
 export interface CurationPostProps {
-  id?: number;
   list: number[];
   title: string;
 }

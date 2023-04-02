@@ -3,7 +3,7 @@ import HttpClient from "../services/HttpClient";
 const CurationAPI = {
   postCuration: async (uploadCuration: any) => {
     try {
-      const path = "curation/post";
+      const path = "/curation/post";
       const response = await HttpClient.post(path, uploadCuration);
       console.log(response);
       return response;
@@ -57,8 +57,19 @@ const CurationAPI = {
   },
   updateCuration: async (changeCuration: any) => {
     try {
-      const path = `/curation/update`;
+      const path = "/curation/update";
       const response = await HttpClient.fetch(path, changeCuration);
+      console.log(response);
+
+      return response;
+    } catch (e) {
+      console.log(e);
+    }
+  },
+  checkCurationId: async (id: number, checked: boolean) => {
+    try {
+      const path = `/curation/checked/${id}`;
+      const response = await HttpClient.fetch(path, checked);
       console.log(response);
 
       return response;

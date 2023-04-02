@@ -1,4 +1,5 @@
 import { useState } from "react";
+import CheckedCuration from "../components/CheckedCuration";
 import CreateCuration from "../components/CreateCuration";
 import UpdateCuration from "../components/UpdateCuration";
 
@@ -27,10 +28,19 @@ const CurationEdit = () => {
                 >
                   수정
                 </span>
+                <span
+                  className={`px-[5px] cursor-pointer ${
+                    curationPage === "check" ? "text-orange-400 font-[600]" : ""
+                  }`}
+                  onClick={() => setCurationPage("check")}
+                >
+                  배치
+                </span>
               </div>
             </div>
             {curationPage == "create" && <CreateCuration />}
             {curationPage == "update" && <UpdateCuration />}
+            {curationPage == "check" && <CheckedCuration />}
           </div>
         </div>
       </div>

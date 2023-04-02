@@ -3,10 +3,15 @@ import CurationAPI from "../../api/CurationAPI";
 import DeleteScheduleItem from "../../assets/Icon/DeleteScheduleItem.svg";
 import * as s from "./styles";
 import CurationArticleList from "../Curation/_fragment/ArticleList";
-import { CurationPostProps } from "../CreateCuration";
+
+export interface CurationUpdateProps {
+  id?: number;
+  list: number[];
+  title: string;
+}
 
 export interface CurationData {
-  id: number;
+  id?: number;
   title: string;
 }
 
@@ -16,8 +21,8 @@ export interface CurationAllProps {
 }
 
 const UpdateCuration = () => {
-  const [curations, setCurations] = useState<CurationAllProps | undefined>();
-  const [curation, setCuration] = useState<CurationPostProps>();
+  const [curations, setCurations] = useState<CurationAllProps | null>(null);
+  const [curation, setCuration] = useState<CurationUpdateProps | null>(null);
   const [checkedArticles, setCheckedArticles] = useState<number[]>([]);
   const [title, setTitle] = useState("");
   // const [isDeleted, setIsDeleted] = useState<boolean>(false);
@@ -39,7 +44,6 @@ const UpdateCuration = () => {
       setCuration(res);
       console.log("ssssssssss", res);
       setTitle(res.title);
-
       const articleIds: number[] | ((prevState: number[]) => number[]) = [];
       res.list.forEach((obj) => {
         const article = obj.article;
@@ -58,12 +62,30 @@ const UpdateCuration = () => {
       setCurations((prevState: any) => {
         return {
           ...prevState,
-          allCuration: prevState.allCuration.filter((curation) => curation.id !== id),
+          allCuration: prevState.allCuration.filter((curation: any) => curation.id !== id),
         };
       });
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const changeCuration = async () => {
+    // curation ? console.log(curation.id) : console.log("");
+    await CurationAPI.getAllCuration(curations);
+    const updatedCuration: CurationUpdateProps = {
+      id: curation?.id,
+      list: checkedArticles,
+      title: title,
+    };
+
+    const res = await CurationAPI.updateCuration(updatedCuration);
+    if (res) {
+      alert("큐레이션이 성공적으로 수정되었습니다.");
+    } else {
+      alert("큐레이션 수정을 실패했습니다.");
+    }
+    setCuration(updatedCuration);
   };
 
   return (
@@ -73,8 +95,7 @@ const UpdateCuration = () => {
           <p className="text-md font-bold">생성된 큐레이션</p>
           <div className="flex flex-col justify-center mt-2">
             {curations?.allCuration &&
-              curations.allCuration.length > 0 &&
-              curations.allCuration.map((data, index) => (
+              curations.allCuration.map((data) => (
                 <div
                   key={data.id}
                   className="flex flex-row items-center border-solid border-[1px] w-5/6 h-[45px] cursor-pointer"
@@ -83,7 +104,7 @@ const UpdateCuration = () => {
                   <s.DeleteBtn
                     src={DeleteScheduleItem}
                     alt="삭제버튼"
-                    onClick={() => deleteCuration(data.id)}
+                    onClick={() => data.id != null && deleteCuration(data.id)}
                   />
                   <div className="text-lg ml-2 font-bold">{data.title}</div>
                 </div>
@@ -121,7 +142,8 @@ const UpdateCuration = () => {
               </button>
               <button
                 className="text-sm font-medium flex items-center p-6 rounded-lg text-white hover:bg-[#FFBD29] bg-[#FF9136] md:text-base lg:text-base"
-                // onClick={changeCuration}
+                type="submit"
+                onClick={changeCuration}
               >
                 수정
               </button>
