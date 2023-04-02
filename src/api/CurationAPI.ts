@@ -3,7 +3,7 @@ import HttpClient from "../services/HttpClient";
 const CurationAPI = {
   postCuration: async (uploadCuration: any) => {
     try {
-      const path = "curation/post";
+      const path = "/curation/post";
       const response = await HttpClient.post(path, uploadCuration);
       console.log(response);
       return response;
@@ -12,14 +12,14 @@ const CurationAPI = {
     }
   },
 
-  getArticleAll: async ({ page }: { page: number }) => {
+  getPageArticles: async (page: number, header: any) => {
     try {
       const path = "article/all";
-      const response: { pageCount: number; articles: any } = await HttpClient.get(path, { page });
-
+      const response = await HttpClient.get(path, { page }, { header });
       return response;
     } catch (e) {
       console.log(e);
+      return null;
     }
   },
   getAllCuration: async (newCuration: any) => {
@@ -33,10 +33,43 @@ const CurationAPI = {
       console.log(e);
     }
   },
+  getCurationId: async (id: number) => {
+    try {
+      const path = `/curation/${id}`;
+      const response = await HttpClient.get(path, {});
+      console.log(response);
+
+      return response;
+    } catch (e) {
+      console.log(e);
+    }
+  },
+  deleteCurationId: async (id: number) => {
+    try {
+      const path = `/curation/delete/${id}`;
+      const response = await HttpClient.fetch(path, {});
+      console.log(response);
+
+      return response;
+    } catch (e) {
+      console.log(e);
+    }
+  },
   updateCuration: async (changeCuration: any) => {
     try {
-      const path = `/curation/update`;
+      const path = "/curation/update";
       const response = await HttpClient.fetch(path, changeCuration);
+      console.log(response);
+
+      return response;
+    } catch (e) {
+      console.log(e);
+    }
+  },
+  checkCurationId: async (id: number, checked: boolean) => {
+    try {
+      const path = `/curation/checked/${id}`;
+      const response = await HttpClient.fetch(path, checked);
       console.log(response);
 
       return response;

@@ -37,7 +37,7 @@ const EditorList = ({
                 <input
                   type="checkbox"
                   value={editor.id}
-                  checked={checkedEditorList.includes(editor.id)}
+                  checked={checkedEditorList.s(editor.id)}
                   onChange={handleCheckboxChange}
                 />
                 <label className="ml-3">{editor.name}</label>

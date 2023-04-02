@@ -13,9 +13,7 @@ const UpdateEditor = () => {
   const editorNameInputRef = useRef<HTMLInputElement | null>(null);
   const editorIntroTextareaRef = useRef<HTMLTextAreaElement | null>(null);
 
-  const [imageURL, setImageURL] = useState<
-    string | ArrayBuffer | undefined | null
-  >();
+  const [imageURL, setImageURL] = useState<string | ArrayBuffer | undefined | null>();
   const [imageFile, setImageFile] = useState<File | null>(null);
 
   const [editors, setEditors] = useState<Editor[] | null>([]);
@@ -102,10 +100,7 @@ const UpdateEditor = () => {
 
       const formData = new FormData();
       imageFile !== null && formData.append("file", imageFile);
-      formData.append(
-        "data",
-        new Blob([newEditorString], { type: "application/json" })
-      );
+      formData.append("data", new Blob([newEditorString], { type: "application/json" }));
       await EditorAPI.updateEditor(formData).then((res) => {
         if (res) {
           alert("필진이 성공적으로 수정되었습니다.");
@@ -152,9 +147,7 @@ const UpdateEditor = () => {
                           <div className="flex flex-row my-auto">
                             <button
                               className="w-[20px] h-[20px] rounded-full text-center my-auto mx-3 text-sm bg-gray-500 text-white hover:bg-gray-600"
-                              onClick={() =>
-                                data.id != null && deleteEditor(data.id)
-                              }
+                              onClick={() => data.id != null && deleteEditor(data.id)}
                             >
                               X
                             </button>
@@ -187,10 +180,7 @@ const UpdateEditor = () => {
                 <div className="w-[90px] h-[90px] rounded-full overflow-hidden bg-gray-300 border-solid border-2 border-gray-400 mx-auto mb-[10px] ">
                   <img className="w-full h-full" src={imageURL?.toString()} />
                 </div>
-                <label
-                  htmlFor="file"
-                  className="text-blue-600 text-sm hover:cursor-pointer"
-                >
+                <label htmlFor="file" className="text-blue-600 text-sm hover:cursor-pointer">
                   프로필 사진 수정
                 </label>
                 <input
@@ -203,10 +193,7 @@ const UpdateEditor = () => {
                 ></input>
               </div>
               <div className="w-full h-[15%] mt-8 mb-0">
-                <label
-                  htmlFor="name"
-                  className="text-md leading-loose text-gray-600"
-                >
+                <label htmlFor="name" className="text-md leading-loose text-gray-600">
                   필진 이름
                 </label>
                 <br />
@@ -220,10 +207,7 @@ const UpdateEditor = () => {
                 ></input>
               </div>
               <div className="w-full h-[45%]">
-                <label
-                  htmlFor="name"
-                  className="text-md leading-loose text-gray-600"
-                >
+                <label htmlFor="name" className="text-md leading-loose text-gray-600">
                   필진 소개
                 </label>
                 <br />

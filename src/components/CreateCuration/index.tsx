@@ -1,16 +1,10 @@
 import { useState } from "react";
 import CurationAPI from "../../api/CurationAPI";
-import * as s from "./styles";
 import CurationArticleList from "../Curation/_fragment/ArticleList";
 
 export interface CurationPostProps {
   list: number[];
   title: string;
-}
-
-export interface GetAllCurationProps {
-  allcuration: [{ id: number; title: string }];
-  checked: [{ id: number; title: string }];
 }
 
 const CreateCuration = () => {
@@ -38,7 +32,7 @@ const CreateCuration = () => {
           name="title"
           value={title}
           placeholder="큐레이션 제목을 입력해주세요"
-          className="w-2/5 p-4 text-md border-gray-500 focus:outline-none focus:ring-indigo-500"
+          className="w-1/2 p-4 text-md border-gray-500 focus:outline-none focus:ring-indigo-500"
           onChange={handleTitle}
         />
 
