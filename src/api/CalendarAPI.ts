@@ -21,7 +21,7 @@ const CalendarAPI = {
       console.log(e);
     }
   },
-  deleteSchedule: async (calendarId: string) => {
+  deleteSchedule: async (calendarId: number) => {
     try {
       const path = `calendar/delete/${calendarId}`;
       const { data } = await HttpClient.delete(path);

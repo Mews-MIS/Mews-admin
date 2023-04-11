@@ -45,7 +45,7 @@ const UpdateCuration = () => {
       console.log("ssssssssss", res);
       setTitle(res.title);
       const articleIds: number[] | ((prevState: number[]) => number[]) = [];
-      res.list.forEach((obj) => {
+      res.list.forEach((obj: any) => {
         const article = obj.article;
         if (article) {
           articleIds.push(article.id);

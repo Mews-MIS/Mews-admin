@@ -29,9 +29,7 @@ const checkCuration = () => {
       //     checked: prevState.checked.concat(info),
       //   };
       // });
-      const res = await CurationAPI.checkCurationId(info.id, true);
-      console.log("78787878", res);
-      console.log("aaaaaaaa", curations);
+      const res = await CurationAPI.checkCurationId(info.id as number, true);
       setIsChecked(!ischecked);
     } catch (error) {
       console.log(error);

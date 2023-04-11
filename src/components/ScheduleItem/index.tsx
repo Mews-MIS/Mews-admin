@@ -6,15 +6,15 @@ import CalendarAPI from "../../api/CalendarAPI";
 
 const ScheduleItem = ({ id, category, title, startDate, endDate }: IDataType) => {
   const startYear = startDate[0];
-  let startMonth = ("00" + startDate[1]).slice(-2);
-  let startDay = ("00" + startDate[2]).slice(-2);
+  const startMonth = ("00" + startDate[1]).slice(-2);
+  const startDay = ("00" + startDate[2]).slice(-2);
 
   const endYear = endDate[0];
-  let endMonth = ("00" + endDate[1]).slice(-2);
-  let endDay = ("00" + endDate[2]).slice(-2);
+  const endMonth = ("00" + endDate[1]).slice(-2);
+  const endDay = ("00" + endDate[2]).slice(-2);
 
   const deleteSchedule = (e: React.MouseEvent<HTMLImageElement>) => {
-    CalendarAPI.deleteSchedule(id);
+    CalendarAPI.deleteSchedule(id!);
     location.reload();
   };
 

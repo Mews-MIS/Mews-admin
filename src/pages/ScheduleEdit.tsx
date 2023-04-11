@@ -4,11 +4,11 @@ import { useEffect, useState } from "react";
 import CalendarAPI from "../api/CalendarAPI";
 
 export interface IDataType {
-  id?: number,
-  title: string,
-  category?: string,
-  startDate: string,
-  endDate: string
+  id?: number;
+  title: string;
+  category?: string;
+  startDate: string;
+  endDate: string;
 }
 
 const ScheduleEdit = () => {
@@ -18,38 +18,38 @@ const ScheduleEdit = () => {
   const [category, setCategory] = useState("");
   const [schedules, setSchedules] = useState<IDataType[]>([]);
   const [existSchedules, setExistSchedules] = useState([]); // 기존 DB에 존재하는 일정 리스트 상태
-  
+
   const handleTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log(e.target.value);
     setTitle(e.target.value);
-  }
+  };
 
   const handleCategory = (e: React.ChangeEvent<HTMLSelectElement>) => {
     console.log(e.target.value);
     setCategory(e.target.value);
-  }
+  };
 
   const handleStartDate = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log(e.target.value);
-    setStartDate(e.target.value);    
-    console.log({startDate});
-  }
+    setStartDate(e.target.value);
+    console.log({ startDate });
+  };
 
   const handleEndDate = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log(e.target.value);
     setEndDate(e.target.value);
-    console.log({endDate});
-  }
+    console.log({ endDate });
+  };
 
   const addSchedule = (e: React.MouseEvent<HTMLButtonElement>) => {
-    console.log({startDate}, {endDate});
+    console.log({ startDate }, { endDate });
     const newSchedule: IDataType = {
       title: title,
       startDate: startDate,
       endDate: endDate,
-      category: category
+      category: category,
     };
-    console.log({newSchedule});
+    console.log({ newSchedule });
     CalendarAPI.postSchedule(newSchedule);
   };
 
@@ -60,12 +60,12 @@ const ScheduleEdit = () => {
   const useConfirm = (message: any, onConfirm: any, onCancel: any) => {
     if (!onConfirm || typeof onConfirm !== "function") return;
     if (onCancel && typeof onCancel !== "function") return;
-  
+
     const confirmAction = () => {
       if (window.confirm(message)) onConfirm();
       else onCancel();
     };
-  
+
     return confirmAction;
   };
 
@@ -83,13 +83,12 @@ const ScheduleEdit = () => {
     cancelConfirm
   );
 
-
   useEffect(() => {
     const schedules: Promise<any> = CalendarAPI.getSchedule();
     schedules.then((data) => {
       setSchedules(data);
       setExistSchedules(data);
-    })
+    });
   }, []);
 
   return (
@@ -97,28 +96,40 @@ const ScheduleEdit = () => {
       <Container>
         <Title>현재 적용된 스케줄</Title>
         <ScheduleListContainer>
-          {
-            schedules &&
+          {schedules &&
             schedules.map((item: IDataType) => {
-              return <ScheduleItem id={item.id} category={item.category} title={item.title} startDate={item.startDate} endDate={item.endDate} />
-            })
-          }
+              return (
+                <ScheduleItem
+                  id={item.id}
+                  category={item.category}
+                  title={item.title}
+                  startDate={item.startDate}
+                  endDate={item.endDate}
+                />
+              );
+            })}
         </ScheduleListContainer>
       </Container>
 
       <Container>
         <Title>스케줄 추가</Title>
 
-          <ScheduleInput>
-            <ScheduleSelect placeholder="일정 종류" onChange={handleCategory}>
-              <option key="동국대학교" value="동국대학교">동국대학교</option>
-              <option key="경영정보학과" value="경영정보학과">경영정보학과</option>
-              <option key="Mews" value="Mews">Mews</option>
-            </ScheduleSelect>
-            <ScheduleTitleInput type="text" value={title} onChange={handleTitle}/>
-            <ScheduleDateInput type="date" placeholder="시작 날짜" onChange={handleStartDate}/>
-            <ScheduleDateInput type="date" placeholder="종료 날짜" onChange={handleEndDate}/>
-          </ScheduleInput>
+        <ScheduleInput>
+          <ScheduleSelect placeholder="일정 종류" onChange={handleCategory}>
+            <option key="동국대학교" value="동국대학교">
+              동국대학교
+            </option>
+            <option key="경영정보학과" value="경영정보학과">
+              경영정보학과
+            </option>
+            <option key="Mews" value="Mews">
+              Mews
+            </option>
+          </ScheduleSelect>
+          <ScheduleTitleInput type="text" value={title} onChange={handleTitle} />
+          <ScheduleDateInput type="date" placeholder="시작 날짜" onChange={handleStartDate} />
+          <ScheduleDateInput type="date" placeholder="종료 날짜" onChange={handleEndDate} />
+        </ScheduleInput>
       </Container>
 
       <Container>
@@ -127,7 +138,6 @@ const ScheduleEdit = () => {
           <AddBtn onClick={addSchedule}>추가</AddBtn>
         </BtnContainer>
       </Container>
-
     </Wrapper>
   );
 };
@@ -143,7 +153,7 @@ const Container = styled.div`
   flex-direction: column;
   width: 80%;
   margin-top: 50px;
-`
+`;
 
 const Title = styled.div`
   font-size: large;
@@ -195,7 +205,7 @@ const CancelBtn = styled.button`
 const AddBtn = styled.button`
   width: 85px;
   height: 42px;
-  background-color: #FF9136;
+  background-color: #ff9136;
   border: 0px;
   border-radius: 10px;
 `;
