@@ -1,5 +1,7 @@
 import styled from "@emotion/styled";
 import WhiteLogo from "../assets/Icon/WhiteLogo.svg";
+import { useState } from "react";
+import LoginAPI from "../api/LoginAPI";
 
 export interface ILogin {
   userId: string;
@@ -7,15 +9,39 @@ export interface ILogin {
 }
 
 export const Login = () => {
+  const [id, setId] = useState("");
+  const [pw, setPw] = useState("");
+
+  const onClickSubmit = () => {
+    const adminInfo: ILogin = {
+      userId: id,
+      userPassword: pw,
+    };
+    console.log("input", adminInfo);
+    const res = LoginAPI.postLogin(adminInfo);
+    console.log({ res });
+    localStorage.setItem("atk", JSON.stringify(res));
+  };
+
   return (
     <Wrapper>
       <Container>
         <LogoWrapper>
           <Logo src={WhiteLogo} alt="로고" />
         </LogoWrapper>
-        <IDInput type="text" placeholder="아이디를 입력하세요" />
-        <PWInput type="text" placeholder="비밀번호를 입력하세요" />
-        <SubmitBtn>로그인</SubmitBtn>
+        <IDInput
+          type="text"
+          placeholder="아이디를 입력하세요"
+          defaultValue={id}
+          onChange={(e) => setId(e.target.value)}
+        />
+        <PWInput
+          type="text"
+          placeholder="비밀번호를 입력하세요"
+          defaultValue={pw}
+          onChange={(e) => setPw(e.target.value)}
+        />
+        <SubmitBtn onClick={onClickSubmit}>로그인</SubmitBtn>
       </Container>
     </Wrapper>
   );
