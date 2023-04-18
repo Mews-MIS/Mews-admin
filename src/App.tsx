@@ -12,6 +12,7 @@ import Statics from "./pages/Statics";
 import ArticleEditList from "./pages/Article/ArticleEditList";
 import ArticleEditDetail from "./pages/Article/ArticleEditDetail";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { Login } from "./pages/Login";
 
 function App() {
   const queryClient = new QueryClient();
@@ -28,6 +29,7 @@ function App() {
           <Route path="/editor" element={<EditorEdit />} />
           <Route path="/statics" element={<Statics />} />
           <Route path="*" element={<NotFound />} />
+          <Route path="/login" element={<Login />} />
         </Route>
       </Routes>
     </QueryClientProvider>
