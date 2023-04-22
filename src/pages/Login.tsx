@@ -17,10 +17,14 @@ export const Login = () => {
       userId: id,
       userPassword: pw,
     };
-    console.log("input", adminInfo);
     const res = LoginAPI.postLogin(adminInfo);
-    console.log({ res });
-    localStorage.setItem("atk", JSON.stringify(res));
+
+    res
+      .then((response) => {
+        localStorage.setItem("atk", JSON.stringify(response));
+        window.location.href = "/";
+      })
+      .catch(() => null);
   };
 
   return (
@@ -36,7 +40,7 @@ export const Login = () => {
           onChange={(e) => setId(e.target.value)}
         />
         <PWInput
-          type="text"
+          type="password"
           placeholder="비밀번호를 입력하세요"
           defaultValue={pw}
           onChange={(e) => setPw(e.target.value)}
