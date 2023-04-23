@@ -101,6 +101,7 @@ const ScheduleEdit = () => {
               return (
                 // eslint-disable-next-line react/jsx-key
                 <ScheduleItem
+                  key={item.id}
                   id={item.id}
                   category={item.category}
                   title={item.title}
