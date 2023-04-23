@@ -41,7 +41,7 @@ const ScheduleEdit = () => {
     console.log({ endDate });
   };
 
-  const addSchedule = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const addSchedule = () => {
     console.log({ startDate }, { endDate });
     const newSchedule: IDataType = {
       title: title,
@@ -53,8 +53,8 @@ const ScheduleEdit = () => {
     CalendarAPI.postSchedule(newSchedule);
   };
 
-  const resetSchedule = (e: React.MouseEvent<HTMLButtonElement>) => {
-    confirmDelete!();
+  const resetSchedule = () => {
+    confirmDelete?.();
   };
 
   const useConfirm = (message: any, onConfirm: any, onCancel: any) => {
@@ -99,7 +99,9 @@ const ScheduleEdit = () => {
           {schedules &&
             schedules.map((item: IDataType) => {
               return (
+                // eslint-disable-next-line react/jsx-key
                 <ScheduleItem
+                  key={item.id}
                   id={item.id}
                   category={item.category}
                   title={item.title}
